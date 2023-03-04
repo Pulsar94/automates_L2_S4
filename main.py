@@ -1,4 +1,5 @@
 table = {}
+alphabet = "abcdefghijklmnopqrstuvxyz"
 def register_auto(num):
     table[num] = {}
     with open("automate/5-"+str(num)+".txt") as auto:
@@ -18,13 +19,18 @@ def longest_auto(num):
 
 def show_table_auto(num):
     print("Affichage table n°"+str(num)+":")
-    print("---"+"---"*longest_auto(num)+"---")
+    print("-"+"----"*(longest_auto(num)+3))
+    print("|I/O|sta| ", end="")
+    for i in range(0,longest_auto(num)+1):
+        print(alphabet[i] + " | ", end="")
+    print("")
+    print("-"+"----"*(longest_auto(num)+3))
     for auto in table[num]:
-        print("|", end="")
+        print("| ", end="")
         for auto2 in table[num][auto]:
-            print(auto2+"|", end="")
+            print(auto2+" | ", end="")
         print("")
-    print("---" + "---" * longest_auto(num) + "---")
+    print("-"+"----"*(longest_auto(num)+3))
 
 def show_graph_auto():
     pass
