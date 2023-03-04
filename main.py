@@ -6,8 +6,7 @@ def register_auto(num):
             line = "".join(line.split("\n"))
             line = " ".join(line.split("\t"))
             Table_Automate = line.split(" ")
-            for value in range(len(Table_Automate)-1):
-                table[num][Table_Automate[1]].append(Table_Automate[value])
+            table[num][Table_Automate[1]] = Table_Automate
 
 
 def longest_auto(num):
@@ -18,12 +17,13 @@ def longest_auto(num):
     return long
 
 def show_table_auto(num):
+    print(table[num])
     print("---"+"---"*longest_auto(num)+"---")
     for auto in table[num]:
         print("|", end="")
-        for auto2 in auto:
+        for auto2 in table[num][auto]:
             print(auto2+"|", end="")
-    print("")
+        print("")
     print("---" + "---" * longest_auto(num) + "---")
 
 def show_graph_auto():
