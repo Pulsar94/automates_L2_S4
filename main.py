@@ -1,7 +1,7 @@
 table = {}
 def register_auto(num):
     table[num] = {}
-    with open("automate/5-1.txt") as auto:
+    with open("automate/5-"+str(num)+".txt") as auto:
         for line in auto.readlines():
             line = "".join(line.split("\n"))
             line = " ".join(line.split("\t"))
@@ -17,7 +17,7 @@ def longest_auto(num):
     return long
 
 def show_table_auto(num):
-    print(table[num])
+    print("Affichage table n°"+str(num)+":")
     print("---"+"---"*longest_auto(num)+"---")
     for auto in table[num]:
         print("|", end="")
@@ -30,5 +30,4 @@ def show_graph_auto():
     pass
 
 register_auto(1)
-print(table[1])
 show_table_auto(1)
