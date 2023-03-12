@@ -124,6 +124,68 @@ def determiniser_automate(G):
     
     return newG
 
+def get_group_adc(G,num): #Retourne le groupe auquel le num pointe
+    for i in G:
+        for j in G[i]:
+            if num == j:
+                return i
+
+def rassembler_automate(G):
+    newG = {}
+    transG = G
+    """
+    #On traite un dic de type:
+
+     {
+        P:{
+            P:[P,P,P]
+        },
+        I:{
+            0:[4,5,1],
+            1:[5,4,0]
+        },
+        II:{
+            2:[0,P,3],
+            3:[1,P,6],
+            6:[O,P,3]
+        },
+        III:{
+            4:[0,3,5],
+            5:[1,2,4]
+        }
+     }
+    """
+    for i in G: #On remplace dans notre second dic les valeurs par leurs groupe équivalent
+        for j in G[i]:
+            for g in G[i][j]:
+                transG[i][j][g] = get_group_adc(G,g)
+
+    """
+    # Désormais on traite un dic de type:
+
+     {
+        P:{
+            P:[P,P,P]
+        },
+        I:{
+            0:[III,III,I],
+            1:[III,III,I]
+        },
+        II:{
+            2:[I,P,II],
+            3:[I,P,II],
+            6:[I,P,II]
+        },
+        III:{
+            4:[I,II,III],
+            5:[I,II,III]
+        }
+     }
+    """
+
+
+    return newG
+
 def minimiser_automate(G):
     state, state2, statestart = "O/I/II/III/IV/V/VI/VII/VIII/IX/X".split("/"), [], 0
     newG, tempG = [], G
@@ -145,15 +207,19 @@ def minimiser_automate(G):
         if not i[1] in state2:
             state2.append(i[1])
 
-    adcTable["O"] = tempG
-    for i in range(len(state2)-1):
-        for j in adcTable:
-            base = {"O": j[0][2].split("/")[1]}
-            for g in j:
-                if g[2].split("/")[1] != base:
+    adcTable["O"] = tempG #Premier ADC "O" initial
+    for i in range(len(state2)-1): #On fait une passe par état
+        for j in adcTable: #On vérifie dans chacune de nos ADC
+
+            base = {j: j[0][2].split("/")[1]} #On identifie celui qui définit la base de notre ADC
+
+            for g in j: #On vérifie chaque lien dans notre ADC
+                if g[2].split("/")[1] != base: #Si l'on trouve un élement ne correspondant pas à notre base nous créons donc une nouvelle entrée ADC pour y mettre l'élément différent
+
                     if not state[state2] in adcTable:
                         adcTable[state[state2]] = []
                     adcTable[state[state2]].append(g)
+
                     j.remove(g)
 
     while (i for i in adcTable if (type(i)==list) ): #WIP
