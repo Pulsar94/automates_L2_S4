@@ -124,4 +124,9 @@ def determiniser_automate(G):
     
     return newG
 
+def minimiser_automate(G):
+    newG = []
+    adc = []
+    # Pour minimiser il faut s'assurer que l'automate est bien determiné
+    G = determiniser_automate(G)
     
