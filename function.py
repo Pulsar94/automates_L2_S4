@@ -125,8 +125,37 @@ def determiniser_automate(G):
     return newG
 
 def minimiser_automate(G):
-    newG = []
-    adc = []
+    state, state2, statestart = "O/I/II/III/IV/V/VI/VII/VIII/IX/X".split("/"), [], 0
+    newG, tempG = [], G
+    adcTable = {}
+    exitTable = []
     # Pour minimiser il faut s'assurer que l'automate est bien determiné
     G = determiniser_automate(G)
+    for i in G: #On recupère tout les noeuds donnant un T
+        if i[3] == 'O' or i[3] == 'IO':
+            exitTable.append(i[0])
+    
+    for i in tempG: #On identifie les sorties en T ou NT
+        if i[2] in exitTable:
+            i[2] = i[2] + "/T"
+        else:
+            i[2] = i[2] + "/NT"
+        
+        #On compte le nombre d'état différent
+        if not i[1] in state2:
+            state2.append(i[1])
+
+    adcTable["O"] = tempG
+    for i in range(len(state2)-1):
+        for j in adcTable:
+            base = {"O": j[0][2].split("/")[1]}
+            for g in j:
+                if g[2].split("/")[1] != base:
+                    if not state[state2] in adcTable:
+                        adcTable[state[state2]] = []
+                    adcTable[state[state2]].append(g)
+                    j.remove(g)
+
+    while (i for i in adcTable if (type(i)==list) ): #WIP
+        pass
     
