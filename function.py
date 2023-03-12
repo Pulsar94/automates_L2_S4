@@ -124,4 +124,6 @@ def determiniser_automate(G):
     
     return newG
 
+def minimiser_automate(G):
+    pass
     
