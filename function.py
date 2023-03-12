@@ -123,7 +123,3 @@ def determiniser_automate(G):
     newG[0][3] = "I" # La première entrée est forcément l'unique entrée dans un automate determinisé
     
     return newG
-
-def minimiser_automate(G):
-    pass
-    
