@@ -63,7 +63,7 @@ def affichage_automate_graphe(G):
 
 
 if __name__ == "__main__":
-    tableau = extraction_tableau("automatepython/automate.txt") # on lit l'automate
+    tableau = extraction_tableau("automate.txt") # on lit l'automate
     affichage_automate_tableau(tableau) # on affiche le tableau
     #fu.standardiser_automate(tableau) # on standardise l'automate
     graphe = tableau_to_graphe(tableau) # on transforme le tableau en graphe
