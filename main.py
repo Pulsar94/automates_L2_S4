@@ -63,10 +63,29 @@ def affichage_automate_graphe(G):
 
 
 if __name__ == "__main__":
-    tableau = extraction_tableau("C:/Users/taoso/Desktop/automate/automate.txt") # on lit l'automate
+    tableau = extraction_tableau("C:/Users/taoso/OneDrive/Desktop/Code&TP/SM4/Projet automate/automatepython/automate.txt") # on lit l'automate
     affichage_automate_tableau(tableau) # on affiche le tableau
 
-    tableau2 = fu.determiniser_automate(tableau) # on déterminise l'automate
+    #tableau2 = fu.determiniser_automate(tableau) # on déterminise l'automate
+    table = {
+        "P":{
+            "P":["P","P","P"]
+        },
+        "I":{
+            "0":["4","5","1"],
+            "1":["5","4","0"]
+        },
+        "II":{
+            "2":["0","P","3"],
+            "3":["1","P","6"],
+            "6":["0","P","3"]
+        },
+        "III":{
+            "4":["0","3","5"],
+            "5":["1","2","4"]
+        }
+     }
+    fu.rassembler_automate(table)
 
     graphe = tableau_to_graphe(tableau) # on transforme le tableau en graphe
     affichage_automate_graphe(graphe) # on affiche le graphe

@@ -127,8 +127,10 @@ def determiniser_automate(G):
 def get_group_adc(G,num): #Retourne le groupe auquel le num pointe
     for i in G:
         for j in G[i]:
+            print(f'{num}---{j}---{i}')
             if num == j:
                 return i
+    return "P"
 
 def rassembler_automate(G):
     newG = {}
@@ -157,8 +159,8 @@ def rassembler_automate(G):
     """
     for i in G: #On remplace dans notre second dic les valeurs par leurs groupe équivalent
         for j in G[i]:
-            for g in G[i][j]:
-                transG[i][j][g] = get_group_adc(G,g)
+            for g in range(len(G[i][j])):
+                transG[i][j][g] = get_group_adc(G,G[i][j][g])
 
     """
     # Désormais on traite un dic de type:
@@ -182,7 +184,39 @@ def rassembler_automate(G):
         }
      }
     """
+    transG2 = {}
+    state = "O/I/II/III/IV/V/VI/VII/VIII/IX/X".split("/")
+    num = -1
+    print(transG)
+    for i in transG:
+        for j in transG[i]:
+            for g in transG[i][j]:
+                compare = []
+                compare.append(g)
+                num = num + 1
+                for i2 in transG:
+                    for j2 in transG[i2]:
+                        #for g2 in transG[i2][j2]:
+                            done = True
+                            print(f'{i2}--{j2}')
+                            for index in range(len(transG[i2][j2])):
+                                print(index)
+                                print(transG[i])
+                                print(transG[i2][j2][index])
+                                print(transG[i][j][index])
+                                print(f'{i}-{j}-{index}----{i2}-{j2}-{index}')
+                                if transG[i][j][index] != transG[i2][j2][index]:
+                                    done = False
+                                
+                            if done:
+                                if not state[num] in transG2:
+                                    transG2[state[num]] = {}
+                                
+                                transG2[state[num]][j2] = G[i2][j2]
+                                transG[i2].pop(j2)
 
+    #print(transG)
+    print(transG2)
 
     return newG
 
@@ -223,5 +257,5 @@ def minimiser_automate(G):
                     j.remove(g)
 
     while (i for i in adcTable if (type(i)==list) ): #WIP
-        pass
+        ...
     
