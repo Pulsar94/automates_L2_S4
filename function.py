@@ -1,3 +1,4 @@
+from copy import deepcopy
 #On vérifie que l'automate est standard ou non
 # Rappel:
 #   - Il est unitaire (un seul état initial)
@@ -127,14 +128,13 @@ def determiniser_automate(G):
 def get_group_adc(G,num): #Retourne le groupe auquel le num pointe
     for i in G:
         for j in G[i]:
-            print(f'{num}---{j}---{i}')
             if num == j:
                 return i
     return "P"
 
 def rassembler_automate(G):
     newG = {}
-    transG = G
+    transG = deepcopy(G)
     """
     #On traite un dic de type:
 
@@ -185,37 +185,35 @@ def rassembler_automate(G):
      }
     """
     transG2 = {}
-    state = "O/I/II/III/IV/V/VI/VII/VIII/IX/X".split("/")
+    state = "O/I/II/III/IV/V/VI/VII/VIII/IX/X/XI/XII/XIII/XIV/XV".split("/")
     num = -1
-    print(transG)
     for i in transG:
         for j in transG[i]:
-            for g in transG[i][j]:
-                compare = []
-                compare.append(g)
-                num = num + 1
-                for i2 in transG:
-                    for j2 in transG[i2]:
-                        #for g2 in transG[i2][j2]:
-                            done = True
-                            print(f'{i2}--{j2}')
-                            for index in range(len(transG[i2][j2])):
-                                print(index)
-                                print(transG[i])
-                                print(transG[i2][j2][index])
-                                print(transG[i][j][index])
-                                print(f'{i}-{j}-{index}----{i2}-{j2}-{index}')
-                                if transG[i][j][index] != transG[i2][j2][index]:
-                                    done = False
-                                
-                            if done:
-                                if not state[num] in transG2:
-                                    transG2[state[num]] = {}
-                                
-                                transG2[state[num]][j2] = G[i2][j2]
-                                transG[i2].pop(j2)
+            num = num + 1
+            toBeDeleted = {}
+            for i2 in transG:
+                for j2 in transG[i2]:
+                    done = True
+                    for index in range(len(transG[i2][j2])):
 
-    #print(transG)
+                        if transG[i][j][index] != transG[i2][j2][index]:
+                            done = False
+                        
+                    if done:
+                        if not state[num] in transG2:
+                            transG2[state[num]] = {}
+                        
+                        transG2[state[num]][j2] = G[i2][j2]
+
+                        if not i2 in toBeDeleted:
+                            toBeDeleted[i2] = []
+
+                        toBeDeleted[i2].append(j2)
+
+        if i2 in toBeDeleted:
+            for j2 in toBeDeleted[i2]:
+                transG[i2].pop(j2)
+
     print(transG2)
 
     return newG
