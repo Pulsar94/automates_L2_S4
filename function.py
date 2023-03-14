@@ -7,7 +7,7 @@ def automate_standard(G): # Vérifie si l'automate d'entrée est standard
     count, countindex = 0, None
     for input in G:
         
-        if input[3] == 'I': # On compte le nombre d'entrée en indexifiant la dernière vue
+        if input[3] == 'I' or input[3] == 'IO': # On compte le nombre d'entrée en indexifiant la dernière vue
             count += 1
             countindex = input[0]
         if count>1: # Si le compte est supérieur a 1 l'automate n'est pas standard
@@ -22,9 +22,11 @@ def standardiser_automate(G): # Fonction pour standardiser l'automate
     if automate_standard(G):
         return G
     
-    Idest, dicInput, first = [], [], True # Idest : ID destination || dicInput : dictionary input || first : premier
+    Idest, dicInput, first, in_out = [], [], True, False # Idest : ID destination || dicInput : dictionary input || first : premier
     for input in G:
-        if input[3] == 'I': #On collecte toute les entrées I pour les mettre dans notre dictionnaire a input
+        if input[3] == 'I' or input[3] == 'IO': #On collecte toute les entrées I pour les mettre dans notre dictionnaire a input
+            if input[3] == 'IO':
+                in_out = True
             dicInput.append(input[0])
             input[3] = '-'
         
@@ -33,7 +35,7 @@ def standardiser_automate(G): # Fonction pour standardiser l'automate
 
     for addition in Idest: # A partir de notre liste de destination on crées notre noeud I qui va tous les servirs
         for k in addition:
-            G.append(['i', addition[k], k, (first and 'I') or '-'])
+            G.append(['i', addition[k], k, (first and in_out and 'IO') or (first and 'I') or '-'])
             first = False # On ne veut créer qu'un seul paramètre i input
     
     return G
@@ -48,9 +50,9 @@ def automate_determine(G):
     indiceDic = {}
     for input in G:
         
-        if input[3] == 'I': # On compte le nombre d'entrée
+        if input[3] == 'I' or input[3] == 'IO': # On compte le nombre d'entrée
             count += 1
-        if count>1: # Si le compte est supérieur a 1 l'automate n'est pas standard
+        if count>1: # Si le compte est supérieur a 1 l'automate n'est pas determinée
             return False
         
         if not input[0] in indiceDic:
@@ -74,7 +76,7 @@ def concateniser_automate_IO(G, ID): # Input ID des noeud, tableau général; pe
                 if not i[1] in sortie:
                     sortie[i[1]] = []
 
-                if i[3] == "O":
+                if i[3] == "O" or i[3] == "IO":
                     sort = True
 
                 sortie[i[1]].append(i[2].split("q")[1])
@@ -92,7 +94,7 @@ def determiniser_automate(G):
     outputTable = []
     
     for input in G: # on identifie toute les entrées
-        if input[3] == 'I':
+        if input[3] == 'I' or i[3] == "IO":
             inputID = inputID + input[0].split("q")[1] + "/" # On ajoute a notre string la valeur de l'entrée (en retirant le q initial pour simplifier le processus)
     
     recursiveTable.append(inputID) # On créee une table qui va périodiquement s'aggrandir dans sa propre boucle pour s'assurer que tout les cas de notre nouvel automate soit pris en compte
@@ -120,6 +122,9 @@ def determiniser_automate(G):
             
             newG.append(["q"+"".join(i.split("/")),j,"q"+"".join(joined.split("/")),(output and "O") or "-"]) #On ajoute a notre nouvel automate les nouveau noeud/lien
 
-    newG[0][3] = "I" # La première entrée est forcément l'unique entrée dans un automate determinisé
+    if newG[0][3] == 'O':# La première entrée est forcément l'unique entrée dans un automate determinisé
+        newG[0][3] = "I" 
+    else:
+        newG[0][3] = "IO" 
     
     return newG
