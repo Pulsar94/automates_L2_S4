@@ -120,7 +120,7 @@ def determiniser_automate(G):
                     outputTable.append(i)
             
             newG.append(["".join(i.split("/")),j,"".join(joined.split("/")),(output and "O") or "-"]) #On ajoute a notre nouvel automate les nouveau noeud/lien
-    print(newG)
+
     newG[0][3] = "I" # La première entrée est forcément l'unique entrée dans un automate determinisé
     
     return newG
@@ -133,7 +133,6 @@ def get_group_adc(G,num): #Retourne le groupe auquel le num pointe
     return "P"
 
 def rassembler_automate(G):
-    newG = {}
     transG = deepcopy(G)
     """
     #On traite un dic de type:
@@ -201,7 +200,6 @@ def rassembler_automate(G):
                     if not j==g and not j in toPop and not g in toPop:
                         identical = True
                         for index in range(len(transG[i][j])):
-                            print(f'{index}||{j}||{g}||{transG[i][g]}')
                             if transG[i][j][index] != transG[i][g][index]:
                                 identical = False
                                 change = True
@@ -213,16 +211,19 @@ def rassembler_automate(G):
                 transG2[state[count]][j] = G[i][j]
                 toPop.append(j)
 
-    print(transG2)
-
-    return newG, change
+    return transG2, change
 
 def minimiser_automate(G):
-    state, state2, statestart = "O/I/II/III/IV/V/VI/VII/VIII/IX/X".split("/"), [], 0
-    newG, tempG = [], {}
+    tempG, newG = {}, []
     needMinimized = True
+    transIndex = []
     # Pour minimiser il faut s'assurer que l'automate est bien determiné
     G = determiniser_automate(G)
+
+    # On récupère tout les indices de transition pour la restoration
+    for i in G:
+        if i[0] == G[0][0]:
+            transIndex.append(i[1])
 
     # Et il faut s'assurer que l'automate est bien complété
     tempG["N"]={}
@@ -232,13 +233,33 @@ def minimiser_automate(G):
             tempG["N"][i[0]] = [j[2] for j in G if i[0]==j[0]]
         else:
             tempG["NT"][i[0]] = [j[2] for j in G if i[0]==j[0]]
-    print(tempG)
-    while needMinimized:
-        tempG, needMinimized = rassembler_automate(tempG)
-    
-    print(tempG)
-    
-    
 
-    
-    
+    while needMinimized: #On minimise jusqu'a qu'on ne le puisse plus
+        tempG, needMinimized = rassembler_automate(tempG)
+
+    alreadyOutput = []
+    # Restoration
+    for i in tempG:
+        value = 0
+        for j in tempG[i][list(tempG[i].keys())[0]]:
+            output = '-'
+            for g in G:
+                if (g[3] == 'I' or g[3] == 'IO') and g[0] not in alreadyOutput:
+                    for j2 in tempG[i]:
+                        for g2 in tempG[i][j2]:
+                            if g[0] in g2:
+                                output = 'I'
+                                alreadyOutput.append(g[0])
+                if g[3] == 'O' and g[0] not in alreadyOutput:
+                    for j2 in tempG[i]:
+                        for g2 in tempG[i][j2]:
+                            if g[0] in g2:
+                                if output == 'I':
+                                    output = 'IO'
+                                else:
+                                    output = 'O'
+                                alreadyOutput.append(g[0])
+            newG.append([i,transIndex[value],get_group_adc(tempG, j),output])
+            value = value + 1
+
+    return newG
