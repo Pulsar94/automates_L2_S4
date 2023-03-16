@@ -63,15 +63,17 @@ def affichage_automate_graphe(G):
 
 
 if __name__ == "__main__":
-    tableau = extraction_tableau("C:/Users/taoso/Desktop/automate/automate.txt") # on lit l'automate
-    affichage_automate_tableau(tableau) # on affiche le tableau
+    tableau = extraction_tableau("C:/Users/taoso/OneDrive/Desktop/Code&TP/SM4/Projet automate/automatepython/automate.txt") # on lit l'automate
+    #affichage_automate_tableau(tableau) # on affiche le tableau
+    tableau = fu.minimiser_automate(tableau)
+    #tableau2 = fu.determiniser_automate(tableau) # on déterminise l'automate
 
-    tableau2 = fu.determiniser_automate(tableau) # on déterminise l'automate
+    #fu.rassembler_automate(table)
 
     graphe = tableau_to_graphe(tableau) # on transforme le tableau en graphe
     affichage_automate_graphe(graphe) # on affiche le graphe
 
-    graphe2 = tableau_to_graphe(tableau2) # on transforme le tableau en graphe
-    affichage_automate_graphe(graphe2) # on affiche le graphe
+    #graphe2 = tableau_to_graphe(tableau2) # on transforme le tableau en graphe
+    #affichage_automate_graphe(graphe2) # on affiche le graphe
 
 
