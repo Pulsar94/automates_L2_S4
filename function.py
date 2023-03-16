@@ -70,7 +70,7 @@ def concateniser_automate_IO(G, ID): # Input ID des noeud, tableau général; pe
     sort = False
     for i in G:
         for j in ID.split("/"):
-            if i[0] == "q"+j:
+            if i[0] == j:
 
                 if not i[1] in sortie:
                     sortie[i[1]] = []
@@ -78,7 +78,7 @@ def concateniser_automate_IO(G, ID): # Input ID des noeud, tableau général; pe
                 if i[3] == "O":
                     sort = True
 
-                sortie[i[1]].append(i[2].split("q")[1])
+                sortie[i[1]].append(i[2])
 
     return sortie, sort
         
@@ -94,7 +94,7 @@ def determiniser_automate(G):
     
     for input in G: # on identifie toute les entrées
         if input[3] == 'I':
-            inputID = inputID + input[0].split("q")[1] + "/" # On ajoute a notre string la valeur de l'entrée (en retirant le q initial pour simplifier le processus)
+            inputID = inputID + input[0] + "/" # On ajoute a notre string la valeur de l'entrée (en retirant le q initial pour simplifier le processus)
     
     recursiveTable.append(inputID) # On créee une table qui va périodiquement s'aggrandir dans sa propre boucle pour s'assurer que tout les cas de notre nouvel automate soit pris en compte
 
@@ -119,8 +119,8 @@ def determiniser_automate(G):
                 else:
                     outputTable.append(i)
             
-            newG.append(["q"+"".join(i.split("/")),j,"q"+"".join(joined.split("/")),(output and "O") or "-"]) #On ajoute a notre nouvel automate les nouveau noeud/lien
-
+            newG.append(["".join(i.split("/")),j,"".join(joined.split("/")),(output and "O") or "-"]) #On ajoute a notre nouvel automate les nouveau noeud/lien
+    print(newG)
     newG[0][3] = "I" # La première entrée est forcément l'unique entrée dans un automate determinisé
     
     return newG
@@ -186,74 +186,59 @@ def rassembler_automate(G):
     """
     transG2 = {}
     state = "O/I/II/III/IV/V/VI/VII/VIII/IX/X/XI/XII/XIII/XIV/XV".split("/")
-    num = -1
+    count = -1
+    toPop = []
+    change = False
     for i in transG:
         for j in transG[i]:
-            num = num + 1
-            toBeDeleted = {}
-            for i2 in transG:
-                for j2 in transG[i2]:
-                    done = True
-                    for index in range(len(transG[i2][j2])):
-
-                        if transG[i][j][index] != transG[i2][j2][index]:
-                            done = False
+            
+            if not j in toPop:
+                count = count + 1
+                if not state[count] in transG2:
+                    transG2[state[count]] = {}
+                    
+                for g in transG[i]:
+                    if not j==g and not j in toPop and not g in toPop:
+                        identical = True
+                        for index in range(len(transG[i][j])):
+                            print(f'{index}||{j}||{g}||{transG[i][g]}')
+                            if transG[i][j][index] != transG[i][g][index]:
+                                identical = False
+                                change = True
                         
-                    if done:
-                        if not state[num] in transG2:
-                            transG2[state[num]] = {}
+                        if identical:
+                            transG2[state[count]][g] = G[i][g]
+                            toPop.append(g)
                         
-                        transG2[state[num]][j2] = G[i2][j2]
-
-                        if not i2 in toBeDeleted:
-                            toBeDeleted[i2] = []
-
-                        toBeDeleted[i2].append(j2)
-
-        if i2 in toBeDeleted:
-            for j2 in toBeDeleted[i2]:
-                transG[i2].pop(j2)
+                transG2[state[count]][j] = G[i][j]
+                toPop.append(j)
 
     print(transG2)
 
-    return newG
+    return newG, change
 
 def minimiser_automate(G):
     state, state2, statestart = "O/I/II/III/IV/V/VI/VII/VIII/IX/X".split("/"), [], 0
-    newG, tempG = [], G
-    adcTable = {}
-    exitTable = []
+    newG, tempG = [], {}
+    needMinimized = True
     # Pour minimiser il faut s'assurer que l'automate est bien determiné
     G = determiniser_automate(G)
+
+    # Et il faut s'assurer que l'automate est bien complété
+    tempG["N"]={}
+    tempG["NT"]={}
     for i in G: #On recupère tout les noeuds donnant un T
         if i[3] == 'O' or i[3] == 'IO':
-            exitTable.append(i[0])
-    
-    for i in tempG: #On identifie les sorties en T ou NT
-        if i[2] in exitTable:
-            i[2] = i[2] + "/T"
+            tempG["N"][i[0]] = [j[2] for j in G if i[0]==j[0]]
         else:
-            i[2] = i[2] + "/NT"
-        
-        #On compte le nombre d'état différent
-        if not i[1] in state2:
-            state2.append(i[1])
+            tempG["NT"][i[0]] = [j[2] for j in G if i[0]==j[0]]
+    print(tempG)
+    while needMinimized:
+        tempG, needMinimized = rassembler_automate(tempG)
+    
+    print(tempG)
+    
+    
 
-    adcTable["O"] = tempG #Premier ADC "O" initial
-    for i in range(len(state2)-1): #On fait une passe par état
-        for j in adcTable: #On vérifie dans chacune de nos ADC
-
-            base = {j: j[0][2].split("/")[1]} #On identifie celui qui définit la base de notre ADC
-
-            for g in j: #On vérifie chaque lien dans notre ADC
-                if g[2].split("/")[1] != base: #Si l'on trouve un élement ne correspondant pas à notre base nous créons donc une nouvelle entrée ADC pour y mettre l'élément différent
-
-                    if not state[state2] in adcTable:
-                        adcTable[state[state2]] = []
-                    adcTable[state[state2]].append(g)
-
-                    j.remove(g)
-
-    while (i for i in adcTable if (type(i)==list) ): #WIP
-        ...
+    
     
