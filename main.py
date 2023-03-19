@@ -21,6 +21,7 @@ def lire_fichier_transition(nom_fichier):
     for transition in tableau_transition:
         print(transition[0], "\t", transition[1], "\t", transition[2], "\t", transition[3])
 
+#Fonction qui affiche le tableau de transition sous forme souhaitée
 def afficher_table_transition(transitions):
     # Création des entêtes
     entetes = ['\033[92m' +'I'+ '\033[0m'+'/'+'\033[91m'+'O'+'\033[0m'+'   ', 'Etat']
@@ -65,7 +66,8 @@ def afficher_table_transition(transitions):
         # Affichage de la ligne en normal sinon
         else:
             print(ligne_str)
-         
+
+#Fonction qui transforme le tableau de transition en graphe   
 def tableau_to_graphe(tableau):
     G = nx.DiGraph()  # on crée un graphe orienté
     for i in range(len(tableau)): 
@@ -79,6 +81,7 @@ def tableau_to_graphe(tableau):
             G.add_edge(tableau[i][1], tableau[i][3], label=tableau[i][2])
     return G
 
+#Fonction qui affiche le graphe
 def affichage_automate_graphe(G):
     # On récupère la liste des couleurs des nœuds
     node_colors = [G.nodes[node]['color'] for node in G.nodes]
