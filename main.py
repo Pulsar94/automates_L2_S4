@@ -23,13 +23,15 @@ def lire_fichier_transition(nom_fichier):
 
 def afficher_table_transition(transitions):
     # Création des entêtes
-    entetes = ['I/O', 'Etat']
+    entetes = ['\033[92m' +'I'+ '\033[0m'+'/'+'\033[91m'+'O'+'\033[0m'+'   ', 'Etat']
     symboles = sorted(list(set([t[2] for t in transitions if t[2] != '-']))) #ici on récupère les symboles
     entetes.extend(symboles) #ici on ajoute les symboles à la liste des entêtes
     entete_str = '{:<6}{:<9}'.format(*entetes[:2]) #ici on crée la première ligne du tableau
     for symbole in entetes[2:]:
         entete_str += '{:<6}'.format(symbole) #ici on crée la deuxième ligne du tableau
+    #affichage de la première ligne du tableau en bleu
     print(entete_str)
+
 
     # Création des lignes pour chaque état 
     etats = sorted(list(set([t[1] for t in transitions]))) 
@@ -54,15 +56,23 @@ def afficher_table_transition(transitions):
         ligne_str = '{:<6}{:<9}'.format(*ligne[:2])
         for i in range(2, len(ligne)):
             ligne_str += '{:<6}'.format(ligne[i])
-        print(ligne_str)
-
+        # Affichage de la ligne en vert si c'est un état d'entrée
+        if ligne[0] == 'I':
+            print('\033[92m' + ligne_str + '\033[0m')
+        # Affichage de la ligne en rouge si c'est un état de sortie
+        elif ligne[0] == 'O':
+            print('\033[91m' + ligne_str + '\033[0m')
+        # Affichage de la ligne en normal sinon
+        else:
+            print(ligne_str)
+         
 def tableau_to_graphe(tableau):
     G = nx.DiGraph()  # on crée un graphe orienté
     for i in range(len(tableau)): 
         if tableau[i][0] == "I":
-            G.add_node(tableau[i][1], color="red")
-        elif tableau[i][0] == "O":
             G.add_node(tableau[i][1], color="green")
+        elif tableau[i][0] == "O":
+            G.add_node(tableau[i][1], color="red")
         else:
             G.add_node(tableau[i][1], color="grey")
         if tableau[i][3] != "-":
