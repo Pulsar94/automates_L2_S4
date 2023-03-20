@@ -67,34 +67,44 @@ def afficher_table_transition(transitions):
         else:
             print(ligne_str)
 
-#Fonction qui transforme le tableau de transition en graphe   
+#Fonction qui transforme le tableau de transition en graphe orienté 
 def tableau_to_graphe(tableau):
-    G = nx.DiGraph()  # on crée un graphe orienté
-    for i in range(len(tableau)): 
-        if tableau[i][0] == "I":
-            G.add_node(tableau[i][1], color="green")
-        elif tableau[i][0] == "O":
-            G.add_node(tableau[i][1], color="red")
+    # Création du graphe
+    G = nx.DiGraph()
+    # Ajout des nœuds
+    for transition in tableau:
+        G.add_node(transition[1])
+        G.add_node(transition[3])
+    # Ajout des arcs
+    for transition in tableau:
+        G.add_edge(transition[1], transition[3], label=transition[2])
+    # Ajout des couleurs
+    for node in G.nodes:
+        if node == 'E':
+            G.nodes[node]['color'] = 'green'
+        elif node == 'S':
+            G.nodes[node]['color'] = 'red'
         else:
-            G.add_node(tableau[i][1], color="grey")
-        if tableau[i][3] != "-":
-            G.add_edge(tableau[i][1], tableau[i][3], label=tableau[i][2])
+            G.nodes[node]['color'] = 'blue'
     return G
 
-#Fonction qui affiche le graphe
+#Fonction qui affiche le graphe comme un automate 
 def affichage_automate_graphe(G):
-    # On récupère la liste des couleurs des nœuds
-    node_colors = [G.nodes[node]['color'] for node in G.nodes]
-    # On récupère la liste des étiquettes des arcs
-    edge_labels = {(u, v): d['label'] for u, v, d in G.edges(data=True)}
-    # On récupère la liste des positions des nœuds
+    # Création de la figure
+    fig, ax = plt.subplots(figsize=(10, 10))
+    # Création de la position des nœuds
     pos = nx.spring_layout(G)
-    # On affiche le graphe
-    nx.draw(G, pos, with_labels=True, node_color=node_colors)
-    # On affiche les étiquettes des arcs
-    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
-    # On affiche le graphe
+    # Création des nœuds
+    nx.draw_networkx_nodes(G, pos, node_color=[G.nodes[node]['color'] for node in G.nodes])
+    # Création des étiquettes des nœuds
+    nx.draw_networkx_labels(G, pos)
+    # Création des arcs
+    nx.draw_networkx_edges(G, pos)
+    # Création des étiquettes des arcs
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=nx.get_edge_attributes(G, 'label'))
+    # Affichage de la figure
     plt.show()
+
 
 if __name__ == "__main__":
     tableau = lire_fichier_transition("automate.txt")  # on lit l'automate
