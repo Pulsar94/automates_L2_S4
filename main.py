@@ -8,16 +8,16 @@ def lire_fichier_transition(nom_fichier):
         for ligne in f:
             ligne = ligne.strip()           #ici on enlève les espaces
             elems = ligne.split()           #ici on sépare les éléments
-            etat_type = elems[0]            #ici on récupère le type d'état
-            etat_actuel = elems[1]          #ici on récupère l'état actuel
-            symbole = elems[2]              #ici on récupère le symbole
-            etat_cible = elems[3]           #ici on récupère l'état cible
-            transitions.append([etat_type, etat_actuel, symbole, etat_cible])
+            etat_type = elems[3]            #ici on récupère le type d'état
+            etat_actuel = elems[0]          #ici on récupère l'état actuel
+            symbole = elems[1]              #ici on récupère le symbole
+            etat_cible = elems[2]           #ici on récupère l'état cible
+            transitions.append([etat_actuel, symbole, etat_cible, etat_type])
     return transitions
 
 #Fonction qui affiche le tableau de transition
 #def afficher_tableau_transition(tableau_transition):
-    print("Etat\tSymbole\tEtat cible")
+    print("Etat\tSymbole\tEtat\tType")
     for transition in tableau_transition:
         print(transition[0], "\t", transition[1], "\t", transition[2], "\t", transition[3])
 
@@ -25,7 +25,7 @@ def lire_fichier_transition(nom_fichier):
 def afficher_table_transition(transitions):
     # Création des entêtes
     entetes = ['\033[92m' +'I'+ '\033[0m'+'/'+'\033[91m'+'O'+'\033[0m'+'   ', 'Etat']
-    symboles = sorted(list(set([t[2] for t in transitions if t[2] != '-']))) #ici on récupère les symboles
+    symboles = sorted(list(set([t[1] for t in transitions if t[1] != '-']))) #ici on récupère les symboles
     entetes.extend(symboles) #ici on ajoute les symboles à la liste des entêtes
     entete_str = '{:<6}{:<9}'.format(*entetes[:2]) #ici on crée la première ligne du tableau
     for symbole in entetes[2:]:
@@ -35,25 +35,27 @@ def afficher_table_transition(transitions):
 
 
     # Création des lignes pour chaque état 
-    etats = sorted(list(set([t[1] for t in transitions]))) 
+    etats = sorted(list(set([t[0] for t in transitions]))) 
     for etat in etats: 
         ligne = ['-'] * len(entetes) 
         for t in transitions:
-            if t[1] == etat:
+            if t[0] == etat:
                 # Indication d'entrée ou de sortie
-                if t[0] == 'I':
+                if t[3] == 'I':
                     ligne[0] = 'I'
-                elif t[0] == 'O':
+                if t[3] == 'IO' :
+                    ligne[0] = 'IO'
+                elif t[3] == 'O':
                     ligne[0] = 'O'
                 # État initial
                 ligne[1] = etat
                 # États cibles pour chaque symbole de transition
-                if t[2] != '-':
-                    index = entetes.index(t[2])
+                if t[1] != '-':
+                    index = entetes.index(t[1])
                     if ligne[index] == '-':
-                        ligne[index] = t[3]
+                        ligne[index] = t[2]
                     else:
-                        ligne[index] += '/' + t[3]
+                        ligne[index] += '/' + t[2]
         ligne_str = '{:<6}{:<9}'.format(*ligne[:2])
         for i in range(2, len(ligne)):
             ligne_str += '{:<6}'.format(ligne[i])
@@ -63,7 +65,10 @@ def afficher_table_transition(transitions):
         # Affichage de la ligne en rouge si c'est un état de sortie
         elif ligne[0] == 'O':
             print('\033[91m' + ligne_str + '\033[0m')
-        # Affichage de la ligne en normal sinon
+        # Affichage de la ligne en jaune si c'est un état d'entrée et de sortie en bleu       
+        elif ligne[0] == 'IO':
+            print('\033[93m' + ligne_str + '\033[0m') 
+        # # Affichage de la ligne en normal sinon
         else:
             print(ligne_str)
 
@@ -73,11 +78,11 @@ def tableau_to_graphe(tableau):
     G = nx.DiGraph()
     # Ajout des nœuds
     for transition in tableau:
-        G.add_node(transition[1])
-        G.add_node(transition[3])
+        G.add_node(transition[0])
+        G.add_node(transition[2])
     # Ajout des arcs
     for transition in tableau:
-        G.add_edge(transition[1], transition[3], label=transition[2])
+        G.add_edge(transition[0], transition[2], label=transition[1])
     # Ajout des couleurs
     for node in G.nodes:
         if node == 'E':
