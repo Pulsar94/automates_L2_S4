@@ -126,7 +126,7 @@ def determiniser_automate(G):
     if newG[0][3] == 'O':# La première entrée est forcément l'unique entrée dans un automate determinisé
         newG[0][3] = "I" 
     else:
-        newG[0][3] = "IO" 
+        newG[0][3] = "I/O" 
     
     return newG
 
@@ -260,7 +260,7 @@ def minimiser_automate(G):
                         for g2 in tempG[i][j2]:
                             if g[0] in g2:
                                 if output == 'I':
-                                    output = 'IO'
+                                    output = 'I/O'
                                 else:
                                     output = 'O'
                                 alreadyOutput.append(g[0])
