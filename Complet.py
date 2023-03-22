@@ -53,5 +53,5 @@ def complet(automate):#permet de compléter un automate
     for i in etat:
         for j in alphabet:
             if i not in dic_alphabet[j]:
-                automate.append([i,j,'P']) #ajout des transitions à l'état 'poubelle' à l'automate
+                automate.append([i,j,'P','-']) #ajout des transitions à l'état 'poubelle' à l'automate
     return sorted(automate) #on retourne le tableau du nouvel automate

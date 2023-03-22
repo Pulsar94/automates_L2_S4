@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import networkx as nx
+import complet as comp
+import function as fu
 
 #Fonction qui lit le fichier et qui renvoie un tableau de transition
 def lire_fichier_transition(nom_fichier):
@@ -142,9 +144,11 @@ if __name__ == "__main__":
     #tableau = fu.minimiser_automate(tableau)
     #tableau2 = fu.determiniser_automate(tableau) # on déterminise l'automate
 
-    ecriture_tableau(tableau, "test1", "Table determinee")
 
-    #fu.rassembler_automate(table)
+    afficher_table_transition(tableau)
+    fu.complementarisation_automate(tableau)
+    afficher_table_transition(tableau)
+    
 
     #graphe = tableau_to_graphe(tableau) # on transforme le tableau en graphe
     #affichage_automate_graphe(graphe) # on affiche le graphe

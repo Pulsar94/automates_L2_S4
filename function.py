@@ -1,4 +1,5 @@
 from copy import deepcopy
+import complet as comp
 #On vérifie que l'automate est standard ou non
 # Rappel:
 #   - Il est unitaire (un seul état initial)
@@ -95,7 +96,7 @@ def determiniser_automate(G):
     outputTable = []
     
     for input in G: # on identifie toute les entrées
-        if input[3] == 'I' or i[3] == "IO":
+        if input[3] == 'I' or input[3] == "IO":
             inputID = inputID + input[0] + "/" # On ajoute a notre string la valeur de l'entrée (en retirant le q initial pour simplifier le processus)
     
     recursiveTable.append(inputID) # On créee une table qui va périodiquement s'aggrandir dans sa propre boucle pour s'assurer que tout les cas de notre nouvel automate soit pris en compte
@@ -126,9 +127,23 @@ def determiniser_automate(G):
     if newG[0][3] == 'O':# La première entrée est forcément l'unique entrée dans un automate determinisé
         newG[0][3] = "I" 
     else:
-        newG[0][3] = "I/O" 
+        newG[0][3] = "IO" 
     
     return newG
+
+def complementarisation_automate(G):
+    comp.complet(G)
+    complet = []
+    for i in G:
+        if not i[0] in complet:
+            print(i)
+            if i[3] == 'O':
+                i[3] == '-'
+            elif i[3] == 'IO':
+                i[3] == 'I'
+            else:
+                i[3] == 'O'
+            complet.append(i[0])
 
 def get_group_adc(G,num): #Retourne le groupe auquel le num pointe
     for i in G:
@@ -162,6 +177,7 @@ def rassembler_automate(G):
      }
     """
     for i in G: #On remplace dans notre second dic les valeurs par leurs groupe équivalent
+        print(G)
         for j in G[i]:
             for g in range(len(G[i][j])):
                 transG[i][j][g] = get_group_adc(G,G[i][j][g])
@@ -225,6 +241,9 @@ def minimiser_automate(G):
     # Pour minimiser il faut s'assurer que l'automate est bien determiné
     G = determiniser_automate(G)
 
+    # Pour minimiser il faut s'assurer que l'automate est bien complet
+    G = comp.complet(G)
+
     # On récupère tout les indices de transition pour la restoration
     for i in G:
         if i[0] == G[0][0]:
@@ -233,12 +252,13 @@ def minimiser_automate(G):
     # Et il faut s'assurer que l'automate est bien complété
     tempG["N"]={}
     tempG["NT"]={}
+    print(G)
     for i in G: #On recupère tout les noeuds donnant un T
         if i[3] == 'O' or i[3] == 'IO':
             tempG["N"][i[0]] = [j[2] for j in G if i[0]==j[0]]
         else:
             tempG["NT"][i[0]] = [j[2] for j in G if i[0]==j[0]]
-
+    print(tempG)
     while needMinimized: #On minimise jusqu'a qu'on ne le puisse plus
         tempG, needMinimized = rassembler_automate(tempG)
 
@@ -260,7 +280,7 @@ def minimiser_automate(G):
                         for g2 in tempG[i][j2]:
                             if g[0] in g2:
                                 if output == 'I':
-                                    output = 'I/O'
+                                    output = 'IO'
                                 else:
                                     output = 'O'
                                 alreadyOutput.append(g[0])
