@@ -110,10 +110,47 @@ def affichage_automate_graphe(G):
     # Affichage de la figure
     plt.show()
 
+def ecriture_tableau(table, file_name, title):
+    done, index, writing = [], [], f'{title} :\n\n'
+    with open(f'resultat/{file_name}.txt','w') as f:
+        for i in table:
+            if not i[1] in index:
+                index.append(i[1])
+        print("IO|Name| ",end="")
+        writing = writing + "IO|Name| "
+        for i in index:
+            print(i,end="  | ")
+            writing = writing + f'{i}  | '
+        print()
+        writing = writing + "\n"
+        for i in table:
+            if not i[0] in done:
+                done.append(i[0])
+                print(f'{i[3]} | {i[0]}',end=' | ')
+                writing = writing + f'{i[3]} | {i[0]} | '
+                for g in table:
+                    if g[0] == i[0]:
+                        print(i[2],end=' | ')
+                        writing = writing + f'{i[2]} | '
+                print()
+                writing = writing + "\n"
+        f.write(writing)
 
 if __name__ == "__main__":
-    tableau = lire_fichier_transition("automate.txt")  # on lit l'automate
-    #afficher_tableau_transition(tableau)  # on affiche le tableau
-    afficher_table_transition(tableau)  # on affiche le tableau de transition sous forme souhaitée
-    graphe = tableau_to_graphe(tableau) # on transforme le tableau en graphe 
-    affichage_automate_graphe(graphe) # on affiche le graphe
+    tableau = lire_fichier_transition("automate.txt") # on lit l'automate
+    #affichage_automate_tableau(tableau) # on affiche le tableau
+    #tableau = fu.minimiser_automate(tableau)
+    #tableau2 = fu.determiniser_automate(tableau) # on déterminise l'automate
+
+    ecriture_tableau(tableau, "test1", "Table determinee")
+
+    #fu.rassembler_automate(table)
+
+    #graphe = tableau_to_graphe(tableau) # on transforme le tableau en graphe
+    #affichage_automate_graphe(graphe) # on affiche le graphe
+
+    #graphe2 = tableau_to_graphe(tableau2) # on transforme le tableau en graphe
+    #affichage_automate_graphe(graphe2) # on affiche le graphe
+
+
+
