@@ -220,7 +220,6 @@ def rassembler_automate(G):
                     if not j==g and not j in toPop and not g in toPop:
                         identical = True
                         for index in range(len(transG[i][j])):
-                            #print(f'{transG[i][j]}||||{transG[i][g]}')
                             if transG[i][j][index] != transG[i][g][index]:
                                 identical = False
                                 change = True
@@ -262,14 +261,11 @@ def minimiser_automate(G):
 
     alreadyOutput = []
     # Restoration
-    print(tempG)
     for i in tempG:
         value = 0
         #for j in tempG[i][list(tempG[i].keys())[0]]:
         for j in tempG[i][list(tempG[i].keys())[0]]:
             output = '-'
-            print(G)
-            print(tempG)
             for g in G:
                 if (g[3] == 'I' or g[3] == 'IO') and g[0] not in alreadyOutput:
                     if g[0] in tempG[i]:

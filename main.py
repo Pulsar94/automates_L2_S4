@@ -38,7 +38,7 @@ if __name__ == "__main__":
         G = lire_fichier_transition("automates/automotates5.txt")
 
     while (menu != 10):
-        print("""\n###################           Menu Principal           #############################
+        print("""\n###################           Menu Principal           ###################
             0. Afficher un automate sous forme de tableau
             1. Afficher un automate sous forme graphique
             2. Charger un automate
@@ -75,7 +75,7 @@ if __name__ == "__main__":
             else:
                 print("L'automate n'est pas deterministe")
 
-            if verif_complet(G,complet=0) :
+            if verif_complet(G) :
                 print("L'automate est complet")
             else:
                 print("L'automate n'est pas complet")

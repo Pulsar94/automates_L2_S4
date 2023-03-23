@@ -18,9 +18,9 @@ def alphabet_complet(automate):#récupérer l'alphabet de l'automate
 def recup_etat(automate): #récupération des états de l'automate sous forme de tableau
     etat=[]
     for i in range(len(automate)):
-        if automate[i][0] not in etat: #on prend les états de départ de transition s'ils ne sont pas déjà ajoutés
+        if automate[i][0] not in etat and not automate[i][0] == '-': #on prend les états de départ de transition s'ils ne sont pas déjà ajoutés
             etat.append(automate[i][0])
-        if automate[i][2] not in etat: #on prend les états de fin de transition s'ils ne sont pas déjà ajoutés
+        if automate[i][2] not in etat and not automate[i][2] == '-': #on prend les états de fin de transition s'ils ne sont pas déjà ajoutés
             etat.append(automate[i][2])
     return sorted(etat) #on ordonne les états (meilleur lecture)
 
@@ -54,13 +54,4 @@ def complet(automate):#permet de compléter un automate
         for j in alphabet:
             if i not in dic_alphabet[j]:
                 automate.append([i,j,'P','-']) #ajout des transitions à l'état 'poubelle' à l'automate
-    TBD = []
-    for i in range(len(automate)):
-        if automate[i][0] == '-':
-            TBD.append(i)
-    
-    removed = 0
-    for i in TBD:
-        del automate[i-removed]
-        removed += 1
     return sorted(automate) #on retourne le tableau du nouvel automate
