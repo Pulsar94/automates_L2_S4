@@ -21,10 +21,10 @@ def safe_input(y, mini, maxi):
             x = int(input(y))
             while (x < mini or x > maxi):
                 x = int(input(
-                    "\n\n###############   Choisir un nombre entier entre 1 et 10 correspondant à une fonction du menu :    ################\n\n"))
+                    "\n\n###############   Choisir un nombre entier entre "+mini+" et "+maxi+":    ################\n\n"))
             break
         except ValueError:
-            print("\n\n########  S'il vous plait, entrer un entier entre 1 et 10  ########\n")
+            print("\n\n########  S'il vous plait, entrer un entier entre "+mini+" et "+maxi+"  ########\n")
     return x
 
 
