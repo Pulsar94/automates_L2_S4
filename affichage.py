@@ -100,6 +100,7 @@ def affichage_automate_graphe(G):
     # Création de la figure
     fig, ax = plt.subplots(figsize=(10, 10))
     # Création de la position des nœuds
+    print(G)
     pos = nx.spring_layout(G)
     # Création des nœuds
     nx.draw_networkx_nodes(G, pos, node_color=[G.nodes[node]['color'] for node in G.nodes])
@@ -114,7 +115,8 @@ def affichage_automate_graphe(G):
 
 def ecriture_tableau(table, file_name, title):
     done, index, writing = [], [], f'{title} :\n\n'
-    with open(f'resultat/{file_name}.txt','w') as f:
+    with open(file_name,'w') as f:
+        ### Refaire à partir d'ici
         for i in table:
             if not i[1] in index:
                 index.append(i[1])

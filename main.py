@@ -10,6 +10,7 @@ from complet import complet
 
 from affichage import lire_fichier_transition
 from affichage import afficher_table_transition
+from affichage import tableau_to_graphe
 from affichage import affichage_automate_graphe
 from affichage import ecriture_tableau
 
@@ -30,11 +31,11 @@ def safe_input(y, mini, maxi):
 # Début du programme
 
 if __name__ == "__main__":
-    G, Gmod = [], []
+    G, G = [], []
     menu = 0
-    AutomataNb = ''
+    AutomataNb = 1
     while G == []:
-        AutomataNb = lire_fichier_transition("automates/automotates5.txt")
+        G = lire_fichier_transition("automates/automotates5.txt")
 
     while (menu != 10):
         print("""\n###################           Menu Principal           #############################
@@ -52,55 +53,65 @@ if __name__ == "__main__":
         menu = safe_input("\nChoisir une fonction: \n", 0, 10)
 
         if menu == 0:
-            afficher_table_transition(transitions)
+            afficher_table_transition(G)
 
         elif menu == 1:
-            affichage_automate_graphe(G)
+            Graphe = tableau_to_graphe(G)
+            affichage_automate_graphe(Graphe)
 
         elif menu == 2:
             G = []
-            AutomataNb = lire_fichier_transition(nom_fichier)
+            AutomataNb = safe_input("\nChoisir un automate (1 à 30)\n", 0, 30)
+            G = lire_fichier_transition("automates/automotates"+str(AutomataNb)+".txt")
 
         elif menu == 3:
             if automate_standard(G) :
                 print("L'automate est standard")
+            else:
+                print("L'automate n'est pas standard")
+
             if automate_determine(G) :
                 print("L'automate est deterministe")
+            else:
+                print("L'automate n'est pas deterministe")
+
             if verif_complet(G,complet=0) :
                 print("L'automate est complet")
+            else:
+                print("L'automate n'est pas complet")
 
         elif menu == 4:
-            Gmod = standardiser_automate(G)
+            G = standardiser_automate(G)
             ## écriture du résultat dans le fichier txt
-            # writeInFile('Execution/B5-' + AutomataNb + '-Standardisé.txt', G)
-            ecriture_tableau(Gmod, 'Execution/B5-' + AutomataNb + '-Standardise.txt', "Automate Standardisé: ")
+            # writeInFile('execution/B5-' + AutomataNb + '-Standardisé.txt', G)
+            ecriture_tableau(G, 'execution/B5-' + str(AutomataNb) + '-Standardise.txt', "Automate Standardisé: ")
             # fonction pour reconnaitre un mot
 
         elif menu == 5:
-            determiniser_automate(G)
+            G = determiniser_automate(G)
             ## écriture du résultat dans le fichier txt
-            # writeInFile('Execution/B5-' + AutomataNb + '-Determinisé.txt', G)
-            ecriture_tableau(Gmod, 'Execution/B5-' + AutomataNb + '-Determinise.txt', "Automate Determinisé: ")
+            # writeInFile('execution/B5-' + AutomataNb + '-Determinisé.txt', G)
+            ecriture_tableau(G, 'execution/B5-' + str(AutomataNb) + '-Determinise.txt', "Automate Determinisé: ")
             # fonction pour reconnaitre un mot
 
         elif menu == 6:
-            complet(G)
+            G = complet(G)
             ## écriture du résultat dans le fichier txt
-            # writeInFile('Execution/B5-' + AutomataNb + '-Determinisé.txt', G)
-            ecriture_tableau(Gmod, 'Execution/B5-' + AutomataNb + '-Complet.txt', "Automate Complet: ")
+            # writeInFile('execution/B5-' + AutomataNb + '-Determinisé.txt', G)
+            ecriture_tableau(G, 'execution/B5-' + str(AutomataNb) + '-Complet.txt', "Automate Complet: ")
             # fonction pour reconnaitre un mot
 
         elif menu == 7:
-            minimiser_automate(G)
+            G = minimiser_automate(G)
             ## écriture du résultat dans le fichier txt
-            # writeInFile('Execution/B5-' + AutomataNb + '-Minimisé.txt', G)
-            ecriture_tableau(Gmod, 'Execution/B5-' + AutomataNb + '-Minimise.txt', "Automate Minimisé: ")
+            # writeInFile('execution/B5-' + AutomataNb + '-Minimisé.txt', G)
+            ecriture_tableau(G, 'execution/B5-' + str(AutomataNb) + '-Minimise.txt', "Automate Minimisé: ")
             # fonction pour reconnaitre un mot
 
-        ## elif menu == 8:
-            complementarisation_automate(G)
-            # writeInFile('Execution/B5-' + AutomataNb + '-LanguageComplémentaire.txt', G)
-            ecriture_tableau(Gmod, 'Execution/B5-' + AutomataNb + '-LanguageComplémentaire.txt', "Automate Complémentarisé: ")
+        elif menu == 8:
+            G = complementarisation_automate(G)
+            # writeInFile('execution/B5-' + AutomataNb + '-LanguageComplementaire.txt', G)
+            ecriture_tableau(G, 'execution/B5-' + str(AutomataNb) + '-LanguageComplementaire.txt', "Automate Complémentarisé: ")
             # fonction pour reconnaitre un mot
 
         ## elif menu == 9:

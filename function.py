@@ -136,7 +136,6 @@ def complementarisation_automate(G):
     complet = []
     for i in G:
         if not i[0] in complet:
-            print(i)
             if i[3] == 'O':
                 i[3] == '-'
             elif i[3] == 'IO':
@@ -144,6 +143,7 @@ def complementarisation_automate(G):
             else:
                 i[3] == 'O'
             complet.append(i[0])
+    return G
 
 def get_group_adc(G,num): #Retourne le groupe auquel le num pointe
     for i in G:
@@ -177,11 +177,10 @@ def rassembler_automate(G):
      }
     """
     for i in G: #On remplace dans notre second dic les valeurs par leurs groupe équivalent
-        print(G)
         for j in G[i]:
             for g in range(len(G[i][j])):
                 transG[i][j][g] = get_group_adc(G,G[i][j][g])
-
+    
     """
     # Désormais on traite un dic de type:
 
@@ -221,6 +220,7 @@ def rassembler_automate(G):
                     if not j==g and not j in toPop and not g in toPop:
                         identical = True
                         for index in range(len(transG[i][j])):
+                            #print(f'{transG[i][j]}||||{transG[i][g]}')
                             if transG[i][j][index] != transG[i][g][index]:
                                 identical = False
                                 change = True
@@ -252,13 +252,11 @@ def minimiser_automate(G):
     # Et il faut s'assurer que l'automate est bien complété
     tempG["N"]={}
     tempG["NT"]={}
-    print(G)
     for i in G: #On recupère tout les noeuds donnant un T
         if i[3] == 'O' or i[3] == 'IO':
-            tempG["N"][i[0]] = [j[2] for j in G if i[0]==j[0]]
+            tempG["N"][i[0]] = [j[2] for j in G if i[0]==j[0] and j[1] != '-']
         else:
-            tempG["NT"][i[0]] = [j[2] for j in G if i[0]==j[0]]
-    print(tempG)
+            tempG["NT"][i[0]] = [j[2] for j in G if i[0]==j[0] and j[1] != '-']
     while needMinimized: #On minimise jusqu'a qu'on ne le puisse plus
         tempG, needMinimized = rassembler_automate(tempG)
 

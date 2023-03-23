@@ -54,4 +54,13 @@ def complet(automate):#permet de compléter un automate
         for j in alphabet:
             if i not in dic_alphabet[j]:
                 automate.append([i,j,'P','-']) #ajout des transitions à l'état 'poubelle' à l'automate
+    TBD = []
+    for i in range(len(automate)):
+        if automate[i][0] == '-':
+            TBD.append(i)
+    
+    removed = 0
+    for i in TBD:
+        del automate[i-removed]
+        removed += 1
     return sorted(automate) #on retourne le tableau du nouvel automate
