@@ -113,31 +113,75 @@ def affichage_automate_graphe(G):
     # Affichage de la figure
     plt.show()
 
-def ecriture_tableau(table, file_name, title):
-    done, index, writing = [], [], f'{title} :\n\n'
-    with open(file_name,'w') as f:
-        ### Refaire à partir d'ici
-        for i in table:
-            if not i[1] in index:
-                index.append(i[1])
-        print("IO|Name| ",end="")
-        writing = writing + "IO|Name| "
-        for i in index:
-            print(i,end="  | ")
-            writing = writing + f'{i}  | '
-        print()
-        writing = writing + "\n"
-        for i in table:
-            if not i[0] in done:
-                done.append(i[0])
-                print(f'{i[3]} | {i[0]}',end=' | ')
-                writing = writing + f'{i[3]} | {i[0]} | '
-                for g in table:
-                    if g[0] == i[0]:
-                        print(i[2],end=' | ')
-                        writing = writing + f'{i[2]} | '
-                print()
-                writing = writing + "\n"
-        f.write(writing)
+#Fonction qui affiche le tableau de transition sous forme souhaitée dans un fichier texte et dans le terminal
+def ecriture_tableau(transitions, file_name, title):
+    # Création des entêtes
+    entetes = ['\033[92m' +'I'+ '\033[0m'+'/'+'\033[91m'+'O'+'\033[0m'+'   ', 'Etat']
+    # Création des entêtes Sans couleur pour le fichier texte
+    entetes2 = ['I'+'/'+'O'+'   ', 'Etat']
+    symboles = sorted(list(set([t[1] for t in transitions if t[1] != '-']))) #ici on récupère les symboles
+    entetes.extend(symboles) #ici on ajoute les symboles à la liste des entêtes
+    entetes2.extend(symboles)
+    entete_str = '{:<6}{:<9}'.format(*entetes[:2]) #ici on crée la première ligne du tableau
+    entete_str2 = '{:<6}{:<9}'.format(*entetes2[:2])
+    for symbole in entetes[2:]:
+        entete_str += '{:<6}'.format(symbole) #ici on crée la deuxième ligne du tableau
+        entete_str2 += '{:<6}'.format(symbole)
+    #affichage de la première ligne du tableau en bleu
+    print(entete_str)
+
+    # ecriture dans le fichier texte
+    file = open(file_name, "w")
+    #ajout du titre en sorant une ligne vide
+    file.write(title + "\n")
+    file.write(entete_str2 + "\n")
+    # Création des lignes pour chaque état 
+    etats = sorted(list(set([t[0] for t in transitions]))) 
+    for etat in etats: 
+        ligne = ['-'] * len(entetes) 
+        for t in transitions:
+            if t[0] == etat:
+                # Indication d'entrée ou de sortie
+                if t[3] == 'I':
+                    ligne[0] = 'I'
+                if t[3] == 'IO' :
+                    ligne[0] = 'IO'
+                elif t[3] == 'O':
+                    ligne[0] = 'O'
+                # État initial
+                ligne[1] = etat
+                # États cibles pour chaque symbole de transition
+                if t[1] != '-':
+                    index = entetes.index(t[1])
+                    if ligne[index] == '-':
+                        ligne[index] = t[2]
+                    else:
+                        ligne[index] += '/' + t[2]
+        ligne_str = '{:<6}{:<9}'.format(*ligne[:2])
+        for i in range(2, len(ligne)):
+            ligne_str += '{:<6}'.format(ligne[i])
+        # Affichage de la ligne en vert si c'est un état d'entrée
+        if ligne[0] == 'I':
+            print('\033[92m' + ligne_str + '\033[0m')
+            #ecriture dans le fichier texte
+            file.write(ligne_str+ "\n")
+        # Affichage de la ligne en rouge si c'est un état de sortie
+        elif ligne[0] == 'O':
+            print('\033[91m' + ligne_str + '\033[0m')
+            #ecriture dans le fichier texte
+            file.write(ligne_str+ "\n")
+        # Affichage de la ligne en jaune si c'est un état d'entrée et de sortie en bleu       
+        elif ligne[0] == 'IO':
+            print('\033[93m' + ligne_str + '\033[0m') 
+            #ecriture dans le fichier texte
+            file.write(ligne_str+ "\n")
+        # # Affichage de la ligne en normal sinon
+        else:
+            print(ligne_str)
+            #ecriture dans le fichier texte
+            file.write(ligne_str+ "\n")
+
+    #fermeture du fichier texte
+    file.close()
 
 

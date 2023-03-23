@@ -61,7 +61,7 @@ if __name__ == "__main__":
 
         elif menu == 2:
             G = []
-            AutomataNb = safe_input("\nChoisir un automate (1 à 30)\n", 0, 30)
+            AutomataNb = safe_input("\nChoisir un automate (1 à 30)\n", 1, 30)
             G = lire_fichier_transition("automates/automotates"+str(AutomataNb)+".txt")
 
         elif menu == 3:
@@ -84,14 +84,14 @@ if __name__ == "__main__":
             G = standardiser_automate(G)
             ## écriture du résultat dans le fichier txt
             # writeInFile('execution/B5-' + AutomataNb + '-Standardisé.txt', G)
-            ecriture_tableau(G, 'execution/B5-' + str(AutomataNb) + '-Standardise.txt', "Automate Standardisé: ")
+            ecriture_tableau(G, 'execution/B5-' + str(AutomataNb) + '-Standardise.txt', "Automate Standardise: ")
             # fonction pour reconnaitre un mot
 
         elif menu == 5:
             G = determiniser_automate(G)
             ## écriture du résultat dans le fichier txt
             # writeInFile('execution/B5-' + AutomataNb + '-Determinisé.txt', G)
-            ecriture_tableau(G, 'execution/B5-' + str(AutomataNb) + '-Determinise.txt', "Automate Determinisé: ")
+            ecriture_tableau(G, 'execution/B5-' + str(AutomataNb) + '-Determinise.txt', "Automate Determinise: ")
             # fonction pour reconnaitre un mot
 
         elif menu == 6:
@@ -105,13 +105,13 @@ if __name__ == "__main__":
             G = minimiser_automate(G)
             ## écriture du résultat dans le fichier txt
             # writeInFile('execution/B5-' + AutomataNb + '-Minimisé.txt', G)
-            ecriture_tableau(G, 'execution/B5-' + str(AutomataNb) + '-Minimise.txt', "Automate Minimisé: ")
+            ecriture_tableau(G, 'execution/B5-' + str(AutomataNb) + '-Minimise.txt', "Automate Minimise: ")
             # fonction pour reconnaitre un mot
 
         elif menu == 8:
             G = complementarisation_automate(G)
             # writeInFile('execution/B5-' + AutomataNb + '-LanguageComplementaire.txt', G)
-            ecriture_tableau(G, 'execution/B5-' + str(AutomataNb) + '-LanguageComplementaire.txt', "Automate Complémentarisé: ")
+            ecriture_tableau(G, 'execution/B5-' + str(AutomataNb) + '-LanguageComplementaire.txt', "Automate Complémentarise: ")
             # fonction pour reconnaitre un mot
 
         ## elif menu == 9:

@@ -204,7 +204,7 @@ def rassembler_automate(G):
      }
     """
     transG2 = {}
-    state = "O/I/II/III/IV/V/VI/VII/VIII/IX/X/XI/XII/XIII/XIV/XV".split("/")
+    state = "0/I/II/III/IV/V/VI/VII/VIII/IX/X/XI/XII/XIII/XIV/XV".split("/")
     count = -1
     toPop = []
     change = False
@@ -262,26 +262,27 @@ def minimiser_automate(G):
 
     alreadyOutput = []
     # Restoration
+    print(tempG)
     for i in tempG:
         value = 0
+        #for j in tempG[i][list(tempG[i].keys())[0]]:
         for j in tempG[i][list(tempG[i].keys())[0]]:
             output = '-'
+            print(G)
+            print(tempG)
             for g in G:
                 if (g[3] == 'I' or g[3] == 'IO') and g[0] not in alreadyOutput:
-                    for j2 in tempG[i]:
-                        for g2 in tempG[i][j2]:
-                            if g[0] in g2:
-                                output = 'I'
-                                alreadyOutput.append(g[0])
+                    if g[0] in tempG[i]:
+                        output = g[3]
+                        alreadyOutput.append(g[0])
                 if g[3] == 'O' and g[0] not in alreadyOutput:
-                    for j2 in tempG[i]:
-                        for g2 in tempG[i][j2]:
-                            if g[0] in g2:
-                                if output == 'I':
-                                    output = 'IO'
-                                else:
-                                    output = 'O'
-                                alreadyOutput.append(g[0])
+                    if g[0] in tempG[i]:
+                        if output == 'I':
+                            output = 'IO'
+                        else:
+                            output = 'O'
+                        alreadyOutput.append(g[0])
+
             newG.append([i,transIndex[value],get_group_adc(tempG, j),output])
             value = value + 1
 
