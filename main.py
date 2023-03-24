@@ -33,9 +33,9 @@ def safe_input(y, mini, maxi):
 if __name__ == "__main__":
     G, G = [], []
     menu = 0
-    AutomataNb = 1
+    AutomataNb = 5
     while G == []:
-        G = lire_fichier_transition("automates/automotates5.txt")
+        G = lire_fichier_transition("automates/automotates"+str(AutomataNb)+".txt")
 
     while (menu != 10):
         print("""\n###################           Menu Principal           ###################
