@@ -14,6 +14,7 @@ from affichage import tableau_to_graphe
 from affichage import affichage_automate_graphe
 from affichage import ecriture_tableau
 
+import os
 
 def safe_input(y, mini, maxi):
     while True:
@@ -34,6 +35,19 @@ if __name__ == "__main__":
     G, G = [], []
     menu = 0
     AutomataNb = 5
+
+    # Création du dossier 'execution' s'il n'existe pas pour stocker les fichiers de log output de la console, une fois l'opération effectué sur l'automate
+    if not (os.path.exists(str(os.path.dirname(os.path.abspath(__file__))) + '\execution')): # vérification si le chemin du dossier n'existe pas
+        # Nom du fichier à créer
+        directory = "execution"
+
+        # Chemin du répertoire actuel
+        parent_dir = str(os.path.dirname(os.path.abspath(__file__)))
+
+        # combinaison et création
+        path = os.path.join(parent_dir, directory)
+        os.mkdir(path)
+
     while G == []:
         G = lire_fichier_transition("automates/automotates"+str(AutomataNb)+".txt")
 

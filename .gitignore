@@ -1,3 +1,6 @@
+# Log des output de la console après le travail sur les automates
+execution/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
