@@ -61,7 +61,7 @@ if __name__ == "__main__":
 
         elif menu == 2:
             G = []
-            AutomataNb = safe_input("\nChoisir un automate (1 à 30)\n", 1, 30)
+            AutomataNb = safe_input("\nChoisir un automate (1 à 30)\n", 1, 39)
             G = lire_fichier_transition("automates/automotates"+str(AutomataNb)+".txt")
 
         elif menu == 3:
