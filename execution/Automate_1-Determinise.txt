@@ -1,0 +1,6 @@
+Automate Determinise: 
+I/O   Etat     a     b     
+-     q0       q0    q0    
+O     q0q4     q0    q0    
+IO    q1q3     q2q0  q0q4  
+O     q2q0     q0    q0    
