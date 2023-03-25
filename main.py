@@ -15,6 +15,8 @@ from affichage import affichage_automate_graphe
 from affichage import ecriture_tableau
 
 import os
+import copy
+
 
 def safe_input(y, mini, maxi):
     while True:
@@ -28,28 +30,44 @@ def safe_input(y, mini, maxi):
             print("\n\n########  S'il vous plait, entrer un entier entre "+mini+" et "+maxi+"  ########\n")
     return x
 
+
 def generate_automate(number):
-    auto = lire_fichier_transition("automates/automotates"+str(number)+".txt")
-    G = auto
+    """
+    Va créer tous les fichiers associés à la résolution des actions effectuées sur les automates dans le dossier execution
+    :param number: 1
+    :return: rien
+    """
 
-    G = standardiser_automate(G)
-    ecriture_tableau(G, 'execution/Automate_' + str(number) + '-Standardise.txt', "Automate Standardise: ")
-    G = auto
+    print('############# Automate'+ str(number) + '#######################')
+    auto = lire_fichier_transition("automates/automotates" + str(number) + ".txt")
+    afficher_table_transition(auto)
 
-    G = determiniser_automate(G)
-    ecriture_tableau(G, 'execution/Automate_' + str(number) + '-Determinise.txt', "Automate Determinise: ")
-    G = auto
+    print('---------------------------------------------------')
+    auto_temp = standardiser_automate(copy.deepcopy(auto))
+    ecriture_tableau(auto_temp, 'execution/Automate_' + str(number) + '-Standardise.txt', "Automate Standardise: ")
+    afficher_table_transition(auto_temp)
 
-    G = complet(G)
-    ecriture_tableau(G, 'execution/Automate_' + str(number) + '-Complet.txt', "Automate Complet: ")
-    G = auto
+    print('---------------------------------------------------')
+    auto_temp = determiniser_automate(copy.deepcopy(auto))
+    ecriture_tableau(auto_temp, 'execution/Automate_' + str(number) + '-Determinise.txt', "Automate Determinise: ")
+    afficher_table_transition(auto_temp)
 
-    G = minimiser_automate(G)
-    ecriture_tableau(G, 'execution/Automate_' + str(number) + '-Minimise.txt', "Automate Minimise: ")
-    G = auto
+    print('---------------------------------------------------')
+    auto_temp = complet(copy.deepcopy(copy.deepcopy(auto)))
+    ecriture_tableau(auto_temp, 'execution/Automate_' + str(number) + '-Complet.txt', "Automate Complet: ")
+    afficher_table_transition(auto_temp)
 
-    G = complementarisation_automate(G)
-    ecriture_tableau(G, 'execution/Automate_' + str(number) + '-LanguageComplementaire.txt', "Automate Complémentarise: ")
+    print('---------------------------------------------------')
+    auto_temp = minimiser_automate(copy.deepcopy(auto))
+    ecriture_tableau(auto_temp, 'execution/Automate_' + str(number) + '-Minimise.txt', "Automate Minimise: ")
+    afficher_table_transition(auto_temp)
+
+    print('---------------------------------------------------')
+    auto_temp = complementarisation_automate(copy.deepcopy(auto))
+    ecriture_tableau(auto_temp, 'execution/Automate_' + str(number) + '-LanguageComplementaire.txt', "Automate Complémentarise: ")
+    afficher_table_transition(auto_temp)
+
+
 
 
 
@@ -60,7 +78,9 @@ if __name__ == "__main__":
     menu = 0
     AutomataNb = 5
 
-    # Création du dossier 'execution' s'il n'existe pas pour stocker les fichiers de log output de la console, une fois l'opération effectué sur l'automate
+    """
+    Création du dossier 'execution' s'il n'existe pas pour stocker les fichiers des opération effectué sur l'automate
+    """
     if not (os.path.exists(str(os.path.dirname(os.path.abspath(__file__))) + '\execution')): # vérification si le chemin du dossier n'existe pas
         # Nom du fichier à créer
         directory = "execution"
@@ -72,9 +92,11 @@ if __name__ == "__main__":
         path = os.path.join(parent_dir, directory)
         os.mkdir(path)
 
-
-    for i in range(1,31):
-        generate_automate(i)
+    """
+    Permet de générer la trace de l'exécution de toutes les opérations sur les automates
+    """
+    #for i in range(1, 31):
+    #    generate_automate(i)
 
 
     while G == []:
