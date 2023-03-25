@@ -108,8 +108,8 @@ def affichage_automate_graphe(G):
     plt.show()
 
 """
-Conservation temporaire de cette fonction. Comme décrit elle affiche et ecrit en fichier.
-Modification de cette dernière plus bas pour qu'elle ecrive juste
+Conservation temporaire de cette fonction. Comme décrit elle affiche et écrit en fichier.
+Modification de cette dernière plus bas pour qu'elle écrive juste
 
 #Fonction qui affiche le tableau de transition sous forme souhaitée dans un fichier texte et dans le terminal
 def ecriture_tableau(transitions, file_name, title):
