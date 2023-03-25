@@ -17,12 +17,6 @@ def lire_fichier_transition(nom_fichier):
             transitions.append([etat_actuel, symbole, etat_cible, etat_type])
     return transitions
 
-#Fonction qui affiche le tableau de transition
-#def afficher_tableau_transition(tableau_transition):
-    print("Etat\tSymbole\tEtat\tType")
-    for transition in tableau_transition:
-        print(transition[0], "\t", transition[1], "\t", transition[2], "\t", transition[3])
-
 #Fonction qui affiche le tableau de transition sous forme souhaitée
 def afficher_table_transition(transitions):
     # Création des entêtes

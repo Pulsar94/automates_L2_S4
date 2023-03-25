@@ -28,6 +28,29 @@ def safe_input(y, mini, maxi):
             print("\n\n########  S'il vous plait, entrer un entier entre "+mini+" et "+maxi+"  ########\n")
     return x
 
+def generate_automate(number):
+    G = lire_fichier_transition("automates/automotates"+str(number)+".txt")
+    G = standardiser_automate(G)
+    ecriture_tableau(G, 'execution/Automate_' + str(number) + '-Standardise.txt', "Automate Standardise: ")
+
+    G = lire_fichier_transition("automates/automotates"+str(number)+".txt")
+    G = determiniser_automate(G)
+    ecriture_tableau(G, 'execution/Automate_' + str(number) + '-Determinise.txt', "Automate Determinise: ")
+
+    G = lire_fichier_transition("automates/automotates"+str(number)+".txt")
+    G = complet(G)
+    ecriture_tableau(G, 'execution/Automate_' + str(number) + '-Complet.txt', "Automate Complet: ")
+
+
+    G = lire_fichier_transition("automates/automotates"+str(number)+".txt")
+    G = minimiser_automate(G)
+    ecriture_tableau(G, 'execution/Automate_' + str(number) + '-Minimise.txt', "Automate Minimise: ")
+
+    G = lire_fichier_transition("automates/automotates"+str(number)+".txt")
+    G = complementarisation_automate(G)
+    ecriture_tableau(G, 'execution/Automate_' + str(number) + '-LanguageComplementaire.txt', "Automate Complémentarise: ")
+
+
 
 # Début du programme
 
@@ -35,6 +58,9 @@ if __name__ == "__main__":
     G, G = [], []
     menu = 0
     AutomataNb = 5
+
+    for i in range(1,40):
+        generate_automate(i)
 
     # Création du dossier 'execution' s'il n'existe pas pour stocker les fichiers de log output de la console, une fois l'opération effectué sur l'automate
     if not (os.path.exists(str(os.path.dirname(os.path.abspath(__file__))) + '\execution')): # vérification si le chemin du dossier n'existe pas
@@ -97,34 +123,30 @@ if __name__ == "__main__":
         elif menu == 4:
             G = standardiser_automate(G)
             ## écriture du résultat dans le fichier txt
-            # writeInFile('execution/Automate_' + AutomataNb + '-Standardisé.txt', G)
             ecriture_tableau(G, 'execution/Automate_' + str(AutomataNb) + '-Standardise.txt', "Automate Standardise: ")
             # fonction pour reconnaitre un mot
 
         elif menu == 5:
             G = determiniser_automate(G)
             ## écriture du résultat dans le fichier txt
-            # writeInFile('execution/Automate_' + AutomataNb + '-Determinisé.txt', G)
             ecriture_tableau(G, 'execution/Automate_' + str(AutomataNb) + '-Determinise.txt', "Automate Determinise: ")
             # fonction pour reconnaitre un mot
 
         elif menu == 6:
             G = complet(G)
             ## écriture du résultat dans le fichier txt
-            # writeInFile('execution/Automate_' + AutomataNb + '-Determinisé.txt', G)
             ecriture_tableau(G, 'execution/Automate_' + str(AutomataNb) + '-Complet.txt', "Automate Complet: ")
             # fonction pour reconnaitre un mot
 
         elif menu == 7:
             G = minimiser_automate(G)
             ## écriture du résultat dans le fichier txt
-            # writeInFile('execution/Automate_' + AutomataNb + '-Minimisé.txt', G)
             ecriture_tableau(G, 'execution/Automate_' + str(AutomataNb) + '-Minimise.txt', "Automate Minimise: ")
             # fonction pour reconnaitre un mot
 
         elif menu == 8:
             G = complementarisation_automate(G)
-            # writeInFile('execution/Automate_' + AutomataNb + '-LanguageComplementaire.txt', G)
+            # écriture du résultat dans le fichier txt
             ecriture_tableau(G, 'execution/Automate_' + str(AutomataNb) + '-LanguageComplementaire.txt', "Automate Complémentarise: ")
             # fonction pour reconnaitre un mot
 
