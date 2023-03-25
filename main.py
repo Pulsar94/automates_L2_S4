@@ -127,30 +127,35 @@ if __name__ == "__main__":
             G = standardiser_automate(G)
             ## écriture du résultat dans le fichier txt
             ecriture_tableau(G, 'execution/Automate_' + str(AutomataNb) + '-Standardise.txt', "Automate Standardise: ")
+            afficher_table_transition(G)
             # fonction pour reconnaitre un mot
 
         elif menu == 5:
             G = determiniser_automate(G)
             ## écriture du résultat dans le fichier txt
             ecriture_tableau(G, 'execution/Automate_' + str(AutomataNb) + '-Determinise.txt', "Automate Determinise: ")
+            afficher_table_transition(G)
             # fonction pour reconnaitre un mot
 
         elif menu == 6:
             G = complet(G)
             ## écriture du résultat dans le fichier txt
             ecriture_tableau(G, 'execution/Automate_' + str(AutomataNb) + '-Complet.txt', "Automate Complet: ")
+            afficher_table_transition(G)
             # fonction pour reconnaitre un mot
 
         elif menu == 7:
             G = minimiser_automate(G)
             ## écriture du résultat dans le fichier txt
             ecriture_tableau(G, 'execution/Automate_' + str(AutomataNb) + '-Minimise.txt', "Automate Minimise: ")
+            afficher_table_transition(G)
             # fonction pour reconnaitre un mot
 
         elif menu == 8:
             G = complementarisation_automate(G)
             # écriture du résultat dans le fichier txt
             ecriture_tableau(G, 'execution/Automate_' + str(AutomataNb) + '-LanguageComplementaire.txt', "Automate Complémentarise: ")
+            afficher_table_transition(G)
             # fonction pour reconnaitre un mot
 
         ## elif menu == 9:
