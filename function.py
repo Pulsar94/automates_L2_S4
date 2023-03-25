@@ -1,7 +1,7 @@
 from copy import deepcopy
 import complet as comp
 #On vérifie que l'automate est standard ou non
-# Rappel:
+# Rappel :
 #   - Il est unitaire (un seul état initial)
 #   - Il n'existe pas de transitions allant sur cet état initial
 
@@ -9,13 +9,13 @@ def automate_standard(G): # Vérifie si l'automate d'entrée est standard
     count, countindex = 0, None
     for input in G:
         
-        if input[3] == 'I' or input[3] == 'IO': # On compte le nombre d'entrée en indexifiant la dernière vue
+        if input[3] == 'I' or input[3] == 'IO': # On compte le nombre d'entrées en indexant la dernière vue
             count += 1
             countindex = input[0]
-        if count>1: # Si le compte est supérieur a 1 l'automate n'est pas standard
+        if count>1: # Si le compte est supérieur à 1 l'automate n'est pas standard
             return False
 
-        if countindex and input[2] == countindex: # On inspecte que aucune noeud se dirige vers l'entrée
+        if countindex and input[2] == countindex: # On inspecte qu'aucun nœud se dirige vers l'entrée
             return False
 
     return True
@@ -32,10 +32,10 @@ def standardiser_automate(G): # Fonction pour standardiser l'automate
             dicInput.append(input[0])
             input[3] = '-'
         
-        if input[0] in dicInput: # On collecte toute les destinations de nos entrées
+        if input[0] in dicInput: # On collecte toutes les destinations de nos entrées
             Idest.append({input[2]:input[1]})
 
-    for addition in Idest: # A partir de notre liste de destination on crées notre noeud I qui va tous les servirs
+    for addition in Idest: # À partir de notre liste de destination, on crée notre nœud I qui va tous les servir
         for k in addition:
             G.append(['i', addition[k], k, (first and in_out and 'IO') or (first and 'I') or '-'])
             first = False # On ne veut créer qu'un seul paramètre i input
@@ -43,9 +43,9 @@ def standardiser_automate(G): # Fonction pour standardiser l'automate
     return G
 
 #On vérifie que l'automate est determine ou non
-# Rappel:
+# Rappel :
 #   - Il est unitaire (un seul état initial)
-#   - Il n'existe pas de transitions d'indice identique sur un noeud
+#   - Il n'existe pas de transitions d'indice identique sur un nœud
 
 def automate_determine(G):
     count = 0 # On reprend le code de vérification de l'automate standard
@@ -95,7 +95,7 @@ def determiniser_automate(G):
     recursiveTable = []
     outputTable = []
     
-    for input in G: # on identifie toute les entrées
+    for input in G: # on identifie toutes les entrées
         if input[3] == 'I' or input[3] == "IO":
             inputID = inputID + input[0] + "/" # On ajoute a notre string la valeur de l'entrée (en retirant le q initial pour simplifier le processus)
     
