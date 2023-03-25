@@ -9,10 +9,12 @@ def alphabet_complet(automate):#récupérer l'alphabet de l'automate
     #alphabet sous forme ['b', 'a', 'd'] / soit les lettres correspondantes aux transitions
     fin=max(alphabet)
     let=97 #caractère ascii de 'a'
+    """
     while (let!=ord(fin)): #jusqu'à la dernière lettre de l'alphabet de transitions
         if chr(let) not in alphabet:
             alphabet.append(chr(let))
         let+=1
+    """
     return sorted(alphabet)  #obtention de l'aphabet dans l'odre jusqu'à la dernière lettre (meilleur lecture)
 
 def recup_etat(automate): #récupération des états de l'automate sous forme de tableau

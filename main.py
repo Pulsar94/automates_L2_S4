@@ -29,24 +29,25 @@ def safe_input(y, mini, maxi):
     return x
 
 def generate_automate(number):
-    G = lire_fichier_transition("automates/automotates"+str(number)+".txt")
+    auto = lire_fichier_transition("automates/automotates"+str(number)+".txt")
+    G = auto
+
     G = standardiser_automate(G)
     ecriture_tableau(G, 'execution/Automate_' + str(number) + '-Standardise.txt', "Automate Standardise: ")
+    G = auto
 
-    G = lire_fichier_transition("automates/automotates"+str(number)+".txt")
     G = determiniser_automate(G)
     ecriture_tableau(G, 'execution/Automate_' + str(number) + '-Determinise.txt', "Automate Determinise: ")
+    G = auto
 
-    G = lire_fichier_transition("automates/automotates"+str(number)+".txt")
     G = complet(G)
     ecriture_tableau(G, 'execution/Automate_' + str(number) + '-Complet.txt', "Automate Complet: ")
+    G = auto
 
-
-    G = lire_fichier_transition("automates/automotates"+str(number)+".txt")
     G = minimiser_automate(G)
     ecriture_tableau(G, 'execution/Automate_' + str(number) + '-Minimise.txt', "Automate Minimise: ")
+    G = auto
 
-    G = lire_fichier_transition("automates/automotates"+str(number)+".txt")
     G = complementarisation_automate(G)
     ecriture_tableau(G, 'execution/Automate_' + str(number) + '-LanguageComplementaire.txt', "Automate Complémentarise: ")
 
@@ -55,12 +56,9 @@ def generate_automate(number):
 # Début du programme
 
 if __name__ == "__main__":
-    G, G = [], []
+    G = []
     menu = 0
     AutomataNb = 5
-
-    for i in range(1,40):
-        generate_automate(i)
 
     # Création du dossier 'execution' s'il n'existe pas pour stocker les fichiers de log output de la console, une fois l'opération effectué sur l'automate
     if not (os.path.exists(str(os.path.dirname(os.path.abspath(__file__))) + '\execution')): # vérification si le chemin du dossier n'existe pas
@@ -73,6 +71,11 @@ if __name__ == "__main__":
         # combinaison et création
         path = os.path.join(parent_dir, directory)
         os.mkdir(path)
+
+
+    for i in range(1,31):
+        generate_automate(i)
+
 
     while G == []:
         G = lire_fichier_transition("automates/automotates"+str(AutomataNb)+".txt")
