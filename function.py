@@ -146,11 +146,11 @@ def complementarisation_automate(G):
     for i in G:
         if not i[0] in complet:
             if i[3] == 'O':
-                i[3] == '-'
+                i[3] = '-'
             elif i[3] == 'IO':
-                i[3] == 'I'
+                i[3] = 'I'
             else:
-                i[3] == 'O'
+                i[3] = 'O'
             complet.append(i[0])
     return G
 
