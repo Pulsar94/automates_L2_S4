@@ -2,8 +2,9 @@
 Nom du projet : Traitement d’automate fini
 Auteurs : Thibaut MENIN - Tao SOLAN – Quentin ADELINE – Marc ROUGAGNOU – Soazic FOURNIER
 Description : Ce projet nous permet de lire des automates fini selon une certaine nomenclature,
-et ainsi pouvoir effectuer différentes actions possible sur ces derniers
-
+et ainsi pouvoir effectuer différentes actions sur ces derniers
+"""
+'''
 ████████╗██████╗░░█████╗░██╗████████╗███████╗███╗░░░███╗███████╗███╗░░██╗████████╗
 ╚══██╔══╝██╔══██╗██╔══██╗██║╚══██╔══╝██╔════╝████╗░████║██╔════╝████╗░██║╚══██╔══╝
 ░░░██║░░░██████╔╝███████║██║░░░██║░░░█████╗░░██╔████╔██║█████╗░░██╔██╗██║░░░██║░░░
@@ -17,7 +18,7 @@ et ainsi pouvoir effectuer différentes actions possible sur ces derniers
 ██║░░██║░░░██╔══██║██║░░░██║░░░██║░░░██║░░██║██║╚██╔╝██║██╔══██║░░░██║░░░██╔══╝░░        ██╔══╝░░██║██║╚████║██║
 ██████╔╝░░░██║░░██║╚██████╔╝░░░██║░░░╚█████╔╝██║░╚═╝░██║██║░░██║░░░██║░░░███████╗        ██║░░░░░██║██║░╚███║██║
 ╚═════╝░░░░╚═╝░░╚═╝░╚═════╝░░░░╚═╝░░░░╚════╝░╚═╝░░░░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚══════╝        ╚═╝░░░░░╚═╝╚═╝░░╚══╝╚═╝
-"""
+'''
 
 ################## IMPORT ##################
 
