@@ -38,7 +38,7 @@ def generate_automate(number):
     :return: rien
     """
 
-    auto = lire_fichier_transition("automates/automotates" + str(number) + ".txt")
+    auto = lire_fichier_transition("automates/automate" + str(number) + ".txt")
 
     "----------------------------------------------------------------------------------"
     auto_temp = standardiser_automate(copy.deepcopy(auto))
@@ -64,7 +64,7 @@ def generate_automate(number):
     debug temporaire
     
     print('############# Automate' + str(number) + '#######################')
-    auto = lire_fichier_transition("automates/automotates" + str(number) + ".txt")
+    auto = lire_fichier_transition("automates/automate" + str(number) + ".txt")
     afficher_table_transition(auto)
 
     print('--------------------standard-------------------------------')
@@ -120,7 +120,7 @@ if __name__ == "__main__":
         generate_automate(i)
 
     while G == []:
-        G = lire_fichier_transition("automates/automotates"+str(AutomataNb)+".txt")
+        G = lire_fichier_transition("automates/automate"+str(AutomataNb)+".txt")
 
     while (menu != 10):
         print("""\n###################           Menu Principal           ###################
@@ -147,7 +147,7 @@ if __name__ == "__main__":
         elif menu == 2:
             G = []
             AutomataNb = safe_input("\nChoisir un automate (1 à 30)\n", 1, 39)
-            G = lire_fichier_transition("automates/automotates"+str(AutomataNb)+".txt")
+            G = lire_fichier_transition("automates/automate"+str(AutomataNb)+".txt")
 
         elif menu == 3:
             if automate_standard(G) :
