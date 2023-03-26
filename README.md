@@ -5,7 +5,8 @@
 ### Matière : Automates finis et expressions rationnelles
 
 Ce projet nous permet de lire des automates finis selon une certaine nomenclature, 
-et ainsi pouvoir effectuer différentes actions sur ces derniers.
+et ainsi pouvoir effectuer différentes actions sur ces derniers tels que : la standardisation,
+la déterminisation, la complétion, la minimisation et l'obtention du langage complémentaire.
 
 
 # Auteurs
@@ -21,4 +22,5 @@ et ainsi pouvoir effectuer différentes actions sur ces derniers.
 
 # Utilisation
 
-Lancez le fichier le fichier `main.py`
+Lancez le fichier le fichier `main.py`\
+Vous trouverez dans le dossier `execution` les traces d'exécution des opérations sur les automates.
