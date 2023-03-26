@@ -83,37 +83,9 @@ def generate_automate(number):
     auto_temp = complementarisation_automate(copy.deepcopy(auto))
     ecriture_tableau(auto_temp, 'execution/Automate_' + str(number) + '-LanguageComplementaire.txt', "Automate Complémentarise: ")
 
-    """
-    debug temporaire
-    
-    print('############# Automate' + str(number) + '#######################')
-    auto = lire_fichier_transition("automates/automate" + str(number) + ".txt")
-    afficher_table_transition(auto)
-
-    print('--------------------standard-------------------------------')
-    auto_temp = standardiser_automate(copy.deepcopy(auto))
-    afficher_table_transition(auto_temp)
-
-    print('--------------------deter-------------------------------')
-    auto_temp = determiniser_automate(copy.deepcopy(auto))
-    afficher_table_transition(auto_temp)
-
-    print('--------------------complet-------------------------------')
-    auto_temp = complet(copy.deepcopy(copy.deepcopy(auto)))
-    afficher_table_transition(auto_temp)
-
-    print('--------------------mini-------------------------------')
-    auto_temp = minimiser_automate(copy.deepcopy(auto))
-    afficher_table_transition(auto_temp)
-
-    print('--------------------complement-------------------------------')
-    auto_temp = complementarisation_automate(copy.deepcopy(auto))
-    afficher_table_transition(auto_temp)
-    """
 
 
-
-# Début du programme
+################## Début du programme ##################
 
 if __name__ == "__main__":
     G = []
