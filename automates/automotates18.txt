@@ -1,5 +1,5 @@
 q1 a q2 I
-q1 b q4 I
+q1 b q3 I
 q1 c q4 I
 q1 d q0 I
 q2 a q2 -

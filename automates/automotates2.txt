@@ -1,2 +1,1 @@
-q0 a q0 I
-q0 - - O
+q0 a q0 IO

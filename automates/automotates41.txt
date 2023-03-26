@@ -8,5 +8,5 @@ q3 a P O
 q3 b P O
 q4 a P O
 q4 b P O
-P a P O
-P b P O
+P a P -
+P b P -

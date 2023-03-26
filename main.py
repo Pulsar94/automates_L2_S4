@@ -37,6 +37,7 @@ def generate_automate(number):
     :param number: 1
     :return: rien
     """
+
     auto = lire_fichier_transition("automates/automotates" + str(number) + ".txt")
 
     "----------------------------------------------------------------------------------"
@@ -59,7 +60,33 @@ def generate_automate(number):
     auto_temp = complementarisation_automate(copy.deepcopy(auto))
     ecriture_tableau(auto_temp, 'execution/Automate_' + str(number) + '-LanguageComplementaire.txt', "Automate Complémentarise: ")
 
+    """
+    debug temporaire
+    
+    print('############# Automate' + str(number) + '#######################')
+    auto = lire_fichier_transition("automates/automotates" + str(number) + ".txt")
+    afficher_table_transition(auto)
 
+    print('--------------------standard-------------------------------')
+    auto_temp = standardiser_automate(copy.deepcopy(auto))
+    afficher_table_transition(auto_temp)
+
+    print('--------------------deter-------------------------------')
+    auto_temp = determiniser_automate(copy.deepcopy(auto))
+    afficher_table_transition(auto_temp)
+
+    print('--------------------complet-------------------------------')
+    auto_temp = complet(copy.deepcopy(copy.deepcopy(auto)))
+    afficher_table_transition(auto_temp)
+
+    print('--------------------mini-------------------------------')
+    auto_temp = minimiser_automate(copy.deepcopy(auto))
+    afficher_table_transition(auto_temp)
+
+    print('--------------------complement-------------------------------')
+    auto_temp = complementarisation_automate(copy.deepcopy(auto))
+    afficher_table_transition(auto_temp)
+    """
 
 
 
@@ -87,7 +114,9 @@ if __name__ == "__main__":
     """
     Permet de générer la trace de l'exécution de toutes les opérations sur les automates
     """
-    for i in range(1, 31):
+    for i in range(1, 45):
+        if i in (31,32,33,34,35): # ici, on ne fait pas ces états car automates avec epsilon
+            continue
         generate_automate(i)
 
     while G == []:
