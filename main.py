@@ -37,35 +37,27 @@ def generate_automate(number):
     :param number: 1
     :return: rien
     """
-
-    print('############# Automate'+ str(number) + '#######################')
     auto = lire_fichier_transition("automates/automotates" + str(number) + ".txt")
-    afficher_table_transition(auto)
 
-    print('---------------------------------------------------')
+    "----------------------------------------------------------------------------------"
     auto_temp = standardiser_automate(copy.deepcopy(auto))
     ecriture_tableau(auto_temp, 'execution/Automate_' + str(number) + '-Standardise.txt', "Automate Standardise: ")
-    afficher_table_transition(auto_temp)
 
-    print('---------------------------------------------------')
+    "----------------------------------------------------------------------------------"
     auto_temp = determiniser_automate(copy.deepcopy(auto))
     ecriture_tableau(auto_temp, 'execution/Automate_' + str(number) + '-Determinise.txt', "Automate Determinise: ")
-    afficher_table_transition(auto_temp)
 
-    print('---------------------------------------------------')
+    "----------------------------------------------------------------------------------"
     auto_temp = complet(copy.deepcopy(copy.deepcopy(auto)))
     ecriture_tableau(auto_temp, 'execution/Automate_' + str(number) + '-Complet.txt', "Automate Complet: ")
-    afficher_table_transition(auto_temp)
 
-    print('---------------------------------------------------')
+    "----------------------------------------------------------------------------------"
     auto_temp = minimiser_automate(copy.deepcopy(auto))
     ecriture_tableau(auto_temp, 'execution/Automate_' + str(number) + '-Minimise.txt', "Automate Minimise: ")
-    afficher_table_transition(auto_temp)
 
-    print('---------------------------------------------------')
+    "----------------------------------------------------------------------------------"
     auto_temp = complementarisation_automate(copy.deepcopy(auto))
     ecriture_tableau(auto_temp, 'execution/Automate_' + str(number) + '-LanguageComplementaire.txt', "Automate Complémentarise: ")
-    afficher_table_transition(auto_temp)
 
 
 
