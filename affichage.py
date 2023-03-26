@@ -1,7 +1,15 @@
+"""
+Auteurs : Thibaut MENIN - Tao SOLAN – Quentin ADELINE – Marc ROUGAGNOU – Soazic FOURNIER
+"""
+
+################## IMPORT ##################
+
 import matplotlib.pyplot as plt
 import networkx as nx
 import complet as comp
 import function as fu
+
+############################################
 
 #Fonction qui lit le fichier et qui renvoie un tableau de transition
 def lire_fichier_transition(nom_fichier):

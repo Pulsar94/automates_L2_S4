@@ -1,3 +1,6 @@
+"""
+Auteurs : Thibaut MENIN - Tao SOLAN – Quentin ADELINE – Marc ROUGAGNOU – Soazic FOURNIER
+"""
 
 def alphabet_complet(automate):#récupérer l'alphabet de l'automate
     alphabet=[]

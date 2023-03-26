@@ -1,5 +1,14 @@
+"""
+Auteurs : Thibaut MENIN - Tao SOLAN – Quentin ADELINE – Marc ROUGAGNOU – Soazic FOURNIER
+"""
+
+################## IMPORT ##################
+
 from copy import deepcopy
 import complet as comp
+
+############################################
+
 #On vérifie que l'automate est standard ou non
 # Rappel :
 #   - Il est unitaire (un seul état initial)
