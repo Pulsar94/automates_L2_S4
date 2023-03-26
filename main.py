@@ -133,7 +133,7 @@ def menu_general():
         print("\n########################        Menu Principal        ########################\n")
         print("L'automate chargé est l'automate n°{}\n".format(AutomataNb))
 
-        for i in range(7):
+        for i in range(7): # permet d'afficher le dictionnaire du menu principal
             print(str(i) + " : " + menu_dic_init.get(i))
         choice = safe_input("\nChoisir une fonction: ", 0, 6,"","")
 
@@ -176,11 +176,11 @@ def menu_general():
                 print("\n########################    Opération sur les automates     ########################\n")
                 print("L'automate chargé est l'automate n°{}\n".format(AutomataNb))
 
-                for i in range(7):
+                for i in range(7): # permet d'afficher le dictionnaire du menu secondaire
                     print(str(i) + " : " + menu_dic_ope.get(i))
                 choice2 = safe_input("\nChoisir une fonction: ", 0, 6, "", "")
 
-                if choice3 == 0: # savoir si on continue avec le l'automate transformé
+                if choice3 == 0: # savoir si on continue avec l'automate transformé
                     G = lire_fichier_transition("automates/automate" + str(AutomataNb) + ".txt")
 
                 if choice2 == 1: # Afficher l'automate sous forme de tableau
