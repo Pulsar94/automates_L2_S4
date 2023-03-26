@@ -6,8 +6,8 @@ Auteurs : Thibaut MENIN - Tao SOLAN – Quentin ADELINE – Marc ROUGAGNOU – S
 
 import matplotlib.pyplot as plt
 import networkx as nx
-import complet as comp
-import function as fu
+import B5_complet as comp
+import B5_function as fu
 
 ############################################
 

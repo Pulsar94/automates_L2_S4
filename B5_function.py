@@ -5,7 +5,7 @@ Auteurs : Thibaut MENIN - Tao SOLAN – Quentin ADELINE – Marc ROUGAGNOU – S
 ################## IMPORT ##################
 
 from copy import deepcopy
-import complet as comp
+import B5_complet as comp
 
 ############################################
 
