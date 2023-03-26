@@ -95,10 +95,7 @@ if __name__ == "__main__":
     """
     Permet de générer la trace de l'exécution de toutes les opérations sur les automates
     """
-
     for i in range(1, 31):
-        if i == 17 or i == 22 or i == 25:
-            continue
         generate_automate(i)
 
     while G == []:

@@ -33,10 +33,10 @@ def verif_complet(automate,complet=0): # vérifie si un automate donné en param
     dic_alphabet={}
     i,j=0,0
     for i in range (len(alphabet)):
-        dic_alphabet[alphabet[i]]='' #obtention du dictionnaire avec les lettres de l'alphabet
+        dic_alphabet[alphabet[i]]=[] #obtention du dictionnaire avec les lettres de l'alphabet
     for j in range (len(automate)):
         if automate[j][0] not in dic_alphabet[automate[j][1]]:
-            dic_alphabet[automate[j][1]]+=automate[j][0] #remplissage du dictionnaire
+            dic_alphabet[automate[j][1]].append(automate[j][0]) #remplissage du dictionnaire
     for k in etat:
         for m in alphabet:
             if k not in dic_alphabet[m]:

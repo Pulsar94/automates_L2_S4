@@ -1,8 +1,8 @@
-q0 a q1 I -
-q0 b q1 I -
-q0 b q2 I -
-q1 b q0 O -
-q1 b q2 O -
-q2 a q0 I O
-q2 a q1 I O
+q0 a q1 I
+q0 b q1 I
+q0 b q2 I
+q1 b q0 O
+q1 b q2 O
+q2 a q0 IO
+q2 a q1 IO
 
