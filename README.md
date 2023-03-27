@@ -22,6 +22,6 @@ la déterminisation, la complétion, la minimisation et l'obtention du langage c
 
 # Utilisation
 
-Vous devrez installer les librairies `matplotlib` et `networkx`
+Vous devrez installer les librairies `matplotlib` et `networkx`\
 Lancez le fichier le fichier `main.py`\
 Vous trouverez dans le dossier `execution` les traces d'exécution des opérations sur les automates.
