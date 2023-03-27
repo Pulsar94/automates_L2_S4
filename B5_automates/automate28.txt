@@ -1,0 +1,7 @@
+q1 a q2 I
+q1 a q4 I
+q2 a q3 -
+q3 a q2 O
+q4 a q5 -
+q5 a q0 -
+q0 a q4 O

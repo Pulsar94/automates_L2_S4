@@ -1,3 +1,6 @@
+# Log des output de la console après le travail sur les B5_automates
+B5_execution/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

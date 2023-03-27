@@ -1,0 +1,4 @@
+q1 a q2 IO
+q2 b q3 -
+q3 c q0 -
+q0 d q1 -
