@@ -43,27 +43,27 @@ def logo():
 
 
 
-def safe_input(y, mini1, maxi1, mini2, maxi2):
+def safe_input(y, mini1, maxi1, aff_max1, aff_min2, aff_max2):
     while True:
         try:
             x = int(input(y))
             while (x < mini1 or x > maxi1 or (x in (31, 32, 33, 34, 35))):
-                if mini2 =="" or maxi2 == "":
+                if aff_max1 =="" or aff_min2 == "" or aff_max2 == "":
                     x = int(input(
                         "\n\n################   Choisir un nombre entier de {} à {} :   ################\n\n".format(mini1, maxi1)))
                 else:
                     x = int(input(
-                        "\n\n################   Choisir un nombre entier de {} à {} et {} à {} :   ################\n\n".format(mini1, maxi1, mini2, maxi2)))
+                        "\n\n################   Choisir un nombre entier de {} à {} et {} à {} :   ################\n\n".format(mini1, aff_max1, aff_min2, aff_max2)))
             break
         except ValueError:
-            if mini2 == "" or maxi2 == "":
+            if aff_max1 =="" or aff_min2 == "" or aff_max2 == "":
                 x = int(input(
                     "\n\n################   S'il vous plait, entrer un entier situer de {} à {} :   ################\n\n".format(mini1,
                                                                                                                  maxi1)))
             else:
                 x = int(input(
                     "\n\n################   S'il vous plait, entrer un entier situer de {} à {} et {} à {} :   ################\n\n".format(
-                        mini1, maxi1, mini2, maxi2)))
+                        mini1, aff_max1, aff_min2, aff_max2)))
     return x
 
 
@@ -135,7 +135,7 @@ def menu_general():
 
         for i in range(7): # permet d'afficher le dictionnaire du menu principal
             print(str(i) + " : " + menu_dic_init.get(i))
-        choice = safe_input("\nChoisir une fonction: ", 0, 6,"","")
+        choice = safe_input("\nChoisir une fonction: ", 0, 6,"","","")
 
         if choice == 1: # Afficher l'automate sous forme de tableau
             print("\n-------------- Table de transition de l'automate n°{} --------------".format(AutomataNb))
@@ -148,7 +148,7 @@ def menu_general():
 
         elif choice == 3: # Charger un automate
             G = []
-            AutomataNb = safe_input("\nChoisir un automate situer de 1 à 30 et 36 à 44\n", 1, 30, 36, 44)
+            AutomataNb = safe_input("\nChoisir un automate situer de 1 à 30 et 36 à 44\n", 1, 44, 30, 36, 44)
             G = lire_fichier_transition("B5_automates/automate" + str(AutomataNb) + ".txt")
 
         elif choice == 4: # Informations sur l'automate
@@ -178,7 +178,7 @@ def menu_general():
 
                 for i in range(7): # permet d'afficher le dictionnaire du menu secondaire
                     print(str(i) + " : " + menu_dic_ope.get(i))
-                choice2 = safe_input("\nChoisir une fonction: ", 0, 6, "", "")
+                choice2 = safe_input("\nChoisir une fonction: ", 0, 6, "", "","")
 
                 if choice3 == 0: # savoir si on continue avec l'automate transformé
                     G = lire_fichier_transition("B5_automates/automate" + str(AutomataNb) + ".txt")
@@ -193,35 +193,35 @@ def menu_general():
                     print("\n--------------------- Automate n°{} standardisé ---------------------".format(AutomataNb))
                     afficher_table_transition(G)
                     print("-----------------------------------------------------------------------")
-                    choice3 = safe_input("\nContinuer avec cet automate transformé ? | 0-NON | 1-OUI : ", 0, 1, "", "")
+                    choice3 = safe_input("\nContinuer avec cet automate transformé ? | 0-NON | 1-OUI : ", 0, 1, "", "","")
 
-                elif choice2 == 2: # Determination
+                elif choice2 == 3: # Determination
                     G = determiniser_automate(G)
                     print("\n--------------------- Automate n°{} déterministe ---------------------".format(AutomataNb))
                     afficher_table_transition(G)
                     print("------------------------------------------------------------------------")
-                    choice3 = safe_input("\nContinuer avec cet automate transformé ? | 0-NON | 1-OUI : ", 0, 1, "", "")
+                    choice3 = safe_input("\nContinuer avec cet automate transformé ? | 0-NON | 1-OUI : ", 0, 1, "", "","")
 
-                elif choice2 == 3: # Compléter
+                elif choice2 == 4: # Compléter
                     G = complet(G)
                     print("\n--------------------- Automate n°{} complet ---------------------".format(AutomataNb))
                     afficher_table_transition(G)
                     print("-------------------------------------------------------------------")
-                    choice3 = safe_input("\nContinuer avec cet automate transformé ? | 0-NON | 1-OUI : ", 0, 1, "", "")
+                    choice3 = safe_input("\nContinuer avec cet automate transformé ? | 0-NON | 1-OUI : ", 0, 1, "", "","")
 
-                elif choice2 == 4: # Minimisation
+                elif choice2 == 5: # Minimisation
                     G = minimiser_automate(G)
                     print("\n--------------------- Automate n°{} minimisé ---------------------".format(AutomataNb))
                     afficher_table_transition(G)
                     print("--------------------------------------------------------------------")
-                    choice3 = safe_input("\nContinuer avec cet automate transformé ? | 0-NON | 1-OUI : ", 0, 1, "", "")
+                    choice3 = safe_input("\nContinuer avec cet automate transformé ? | 0-NON | 1-OUI : ", 0, 1, "", "","")
 
-                elif choice2 == 5: # Langage complementaire
+                elif choice2 == 6: # Langage complementaire
                     G = complementarisation_automate(G)
                     print("\n-------------- Automate complémentaire de l'automate n°{}  --------------".format(AutomataNb))
                     afficher_table_transition(G)
                     print("---------------------------------------------------------------------------")
-                    choice3 = safe_input("\nContinuer avec cet automate transformé ? | 0-NON | 1-OUI : ", 0, 1, "", "")
+                    choice3 = safe_input("\nContinuer avec cet automate transformé ? | 0-NON | 1-OUI : ", 0, 1, "", "", "")
 
                 elif choice2 == 0: # Retour au menu principal
                     print("Retour au menu principal...")
