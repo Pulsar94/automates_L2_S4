@@ -141,6 +141,7 @@ def determiniser_automate(G):
     return newG
 
 def complementarisation_automate(G):
+    G = determiniser_automate(G)
     comp.complet(G)
     complet = []
     for i in G:
