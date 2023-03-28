@@ -113,11 +113,12 @@ def menu_general():
 
     # Dictionnaire du menu sur les opérations
     menu_dic_ope = {1: "Afficher l'automate sous forme de tableau",
-                    2: "Standardisation",
-                    3: "Determination",
-                    4: "Compléter",
-                    5: "Minimisation",
-                    6: "Langage complementaire",
+                    2: "Afficher l'automate sous forme graphique",
+                    3: "Standardisation",
+                    4: "Determination",
+                    5: "Compléter",
+                    6: "Minimisation",
+                    7: "Langage complementaire",
                     0: "Retour au menu principal"}
 
     logo()
@@ -169,9 +170,9 @@ def menu_general():
                 print("\n########################    Opération sur les automates     ########################\n")
                 print("L'automate chargé est l'automate n°{}\n".format(AutomataNb))
 
-                for i in range(7): # permet d'afficher le dictionnaire du menu secondaire
+                for i in range(8): # permet d'afficher le dictionnaire du menu secondaire
                     print(str(i) + " : " + menu_dic_ope.get(i))
-                choice2 = safe_input("\nChoisir une fonction: ", 0, 6, "", "","")
+                choice2 = safe_input("\nChoisir une fonction: ", 0, 7, "", "","")
 
                 if choice3 == 0: # savoir si on continue avec l'automate transformé
                     G = lire_fichier_transition("B5_automates/automate" + str(AutomataNb) + ".txt")
@@ -181,35 +182,39 @@ def menu_general():
                     afficher_table_transition(G)
                     print("--------------------------------------------------------------------")
 
-                elif choice2 == 2: # Standardisation
+                elif choice2 == 2: # Afficher l'automate sous forme graphique
+                    Graphe = tableau_to_graphe(G)
+                    affichage_automate_graphe(Graphe)
+
+                elif choice2 == 3: # Standardisation
                     G = standardiser_automate(G)
                     print("\n--------------------- Automate n°{} standardisé ---------------------".format(AutomataNb))
                     afficher_table_transition(G)
                     print("-----------------------------------------------------------------------")
                     choice3 = safe_input("\nContinuer avec cet automate transformé ? | 0-NON | 1-OUI : ", 0, 1, "", "","")
 
-                elif choice2 == 3: # Determination
+                elif choice2 == 4: # Determination
                     G = determiniser_automate(G)
                     print("\n--------------------- Automate n°{} déterministe ---------------------".format(AutomataNb))
                     afficher_table_transition(G)
                     print("------------------------------------------------------------------------")
                     choice3 = safe_input("\nContinuer avec cet automate transformé ? | 0-NON | 1-OUI : ", 0, 1, "", "","")
 
-                elif choice2 == 4: # Compléter
+                elif choice2 == 5: # Compléter
                     G = complet(G)
                     print("\n--------------------- Automate n°{} complet ---------------------".format(AutomataNb))
                     afficher_table_transition(G)
                     print("-------------------------------------------------------------------")
                     choice3 = safe_input("\nContinuer avec cet automate transformé ? | 0-NON | 1-OUI : ", 0, 1, "", "","")
 
-                elif choice2 == 5: # Minimisation
+                elif choice2 == 6: # Minimisation
                     G = minimiser_automate(G)
                     print("\n--------------------- Automate n°{} minimisé ---------------------".format(AutomataNb))
                     afficher_table_transition(G)
                     print("--------------------------------------------------------------------")
                     choice3 = safe_input("\nContinuer avec cet automate transformé ? | 0-NON | 1-OUI : ", 0, 1, "", "","")
 
-                elif choice2 == 6: # Langage complementaire
+                elif choice2 == 7: # Langage complementaire
                     G = complementarisation_automate(G)
                     print("\n-------------- Automate complémentaire de l'automate n°{}  --------------".format(AutomataNb))
                     afficher_table_transition(G)
