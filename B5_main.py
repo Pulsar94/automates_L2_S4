@@ -56,14 +56,7 @@ def safe_input(y, mini1, maxi1, aff_max1, aff_min2, aff_max2):
                         "\n\n################   Choisir un nombre entier de {} à {} et {} à {} :   ################\n\n".format(mini1, aff_max1, aff_min2, aff_max2)))
             break
         except ValueError:
-            if aff_max1 =="" or aff_min2 == "" or aff_max2 == "":
-                x = int(input(
-                    "\n\n################   S'il vous plait, entrer un entier situé de {} à {} :   ################\n\n".format(mini1,
-                                                                                                                 maxi1)))
-            else:
-                x = int(input(
-                    "\n\n################   S'il vous plait, entrer un entier situé de {} à {} et {} à {} :   ################\n\n".format(
-                        mini1, aff_max1, aff_min2, aff_max2)))
+            print(">>>>>>>>>>>> Il faut saisir un ENTIER <<<<<<<<<<<<")
     return x
 
 
