@@ -78,41 +78,30 @@ def afficher_table_transition(transitions):
 
 #Fonction qui transforme le tableau de transition en graphe orienté 
 def tableau_to_graphe(tableau):
-    # Création du graphe
     G = nx.DiGraph()
-    # Ajout des nœuds
-    for transition in tableau:
-        G.add_node(transition[0])
-        G.add_node(transition[2])
-    # Ajout des arcs
-    for transition in tableau:
-        G.add_edge(transition[0], transition[2], label=transition[1])
-    # Ajout des couleurs
-    for node in G.nodes:
-        if node == 'E':
-            G.nodes[node]['color'] = 'green'
-        elif node == 'S':
-            G.nodes[node]['color'] = 'red'
-        else:
-            G.nodes[node]['color'] = 'blue'
+    for t in tableau:
+        if t[1] != '-':
+            G.add_edge(t[0], t[2], label=t[1])
+        if t[3] == 'I':
+            G.nodes[t[0]]['color'] = 'green'
+        elif t[3] == 'O':
+            G.nodes[t[0]]['color'] = 'red'
+        elif t[3] == 'IO':
+            G.nodes[t[0]]['color'] = 'orange'
+
     return G
 
 #Fonction qui affiche le graphe comme un automate 
 def affichage_automate_graphe(G):
-    # Création de la figure
-    fig, ax = plt.subplots(figsize=(10, 10))
-    # Création de la position des nœuds
-    print(G)
     pos = nx.spring_layout(G)
-    # Création des nœuds
-    nx.draw_networkx_nodes(G, pos, node_color=[G.nodes[node]['color'] for node in G.nodes])
-    # Création des étiquettes des nœuds
-    nx.draw_networkx_labels(G, pos)
-    # Création des arcs
+    # Affichage des états
+    nx.draw_networkx_nodes(G, pos, node_color=[G.nodes[n].get('color', 'grey') for n in G.nodes])
+    # Affichage des transitions
     nx.draw_networkx_edges(G, pos)
-    # Création des étiquettes des arcs
+    # Affichage des étiquettes des transitions
     nx.draw_networkx_edge_labels(G, pos, edge_labels=nx.get_edge_attributes(G, 'label'))
-    # Affichage de la figure
+    # Affichage des étiquettes des états
+    nx.draw_networkx_labels(G, pos)
     plt.show()
 
 
