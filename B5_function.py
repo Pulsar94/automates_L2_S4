@@ -134,9 +134,9 @@ def determiniser_automate(G):
             newG.append(["".join(i.split("/")),j,"".join(joined.split("/")),(output and "O") or "-"]) #On ajoute a notre nouvel automate les nouveau noeud/lien
 
     if newG[0][3] == 'O':# La première entrée est forcément l'unique entrée dans un automate determinisé
-        newG[0][3] = "I" 
+        newG[0][3] = "IO"
     else:
-        newG[0][3] = "IO" 
+        newG[0][3] = "I"
     
     return newG
 
