@@ -58,11 +58,11 @@ def safe_input(y, mini1, maxi1, aff_max1, aff_min2, aff_max2):
         except ValueError:
             if aff_max1 =="" or aff_min2 == "" or aff_max2 == "":
                 x = int(input(
-                    "\n\n################   S'il vous plait, entrer un entier situer de {} à {} :   ################\n\n".format(mini1,
+                    "\n\n################   S'il vous plait, entrer un entier situé de {} à {} :   ################\n\n".format(mini1,
                                                                                                                  maxi1)))
             else:
                 x = int(input(
-                    "\n\n################   S'il vous plait, entrer un entier situer de {} à {} et {} à {} :   ################\n\n".format(
+                    "\n\n################   S'il vous plait, entrer un entier situé de {} à {} et {} à {} :   ################\n\n".format(
                         mini1, aff_max1, aff_min2, aff_max2)))
     return x
 
@@ -148,7 +148,7 @@ def menu_general():
 
         elif choice == 3: # Charger un automate
             G = []
-            AutomataNb = safe_input("\nChoisir un automate situer de 1 à 30 et 36 à 44\n", 1, 44, 30, 36, 44)
+            AutomataNb = safe_input("\nChoisir un automate situé de 1 à 30 et 36 à 44\n", 1, 44, 30, 36, 44)
             G = lire_fichier_transition("B5_automates/automate" + str(AutomataNb) + ".txt")
 
         elif choice == 4: # Informations sur l'automate
